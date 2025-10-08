@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd 'Website official manegeduiksehoef' && npm run build",
+  "devCommand": "cd 'Website official manegeduiksehoef' && npm run dev",
+  "installCommand": "cd 'Website official manegeduiksehoef' && npm install",
+  "framework": "nextjs",
+  "outputDirectory": "Website official manegeduiksehoef/.next"
+}
