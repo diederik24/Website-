@@ -1,0 +1,79 @@
+/*
+	Theme Name:     Okidoki Stables child thema
+	Theme URI:      https://www.modernemeesters.nl
+	Description:    Child thema van Samatex
+	Author:         Dion | Moderne Meesters
+	Author URI:     https://www.modernemeesters.nl
+	Version:        1.0
+	Template:       samatex
+*/
+
+/* =Thema wijzigingen starten hier
+-------------------------------------------------------------- */
+header .header-slogan a:hover { color: #000; }
+.header-logo .sticky-logo {
+    max-height: 55px !important;
+}
+.header-logo .logo {
+    margin-top: -50px !important;
+}
+.post-image-overlay > .overlay-read-more:hover, .post-image-overlay > .post-image-overlay-content > .overlay-read-more:hover {
+			background-color: #96b422;
+			color: #ffffff;
+		}
+.et-accordion .toggle-ind:before { color: #96b422; }
+.et-accordion .toggle-title.active .toggle-ind:before { background-color: #96b422 !important; }
+.post-image-overlay > .overlay-read-more { color: #96b422; }
+.post-image-overlay-content > .overlay-read-more { color: #96b422 !important; }
+.post-image-overlay-content > .overlay-read-more:hover { color: #fff !important; }
+.blog-layout-full .post-body .post-excerpt, .blog-layout-list .post-body .post-excerpt {
+    font-size: 15px;
+    line-height: 23px;
+}
+.single-post-page > .post .post-body .post-content {
+    font-size: 15px;
+    line-height: 23px;
+}
+#et-footer-16931 .widget_recent_entries ul li a { color: #fff !important; }
+#et-footer-16931 .et-social-links a:hover { color: #fff !important; }
+.et-image-box.classic .post-body { min-height: 112px; }
+.header-slogan span { font-size: 14px; }
+.header-slogan a { color: #fff; }
+.header-slogan a:hover { color: #f1681e;}
+.page-content .vc_row { background: #F8F7F7; padding-bottom: 25px; }
+footer.footer { color: #fff; }
+footer.footer a { color: #fff; }
+footer.footer a:hover { color: #fff !important; }
+footer.footer .widget_recent_entries ul li a:hover { color: #fff !important; }
+
+#et-content.padding-true {
+    padding: 36px 0;
+}
+a.full { width: 100% !important; }
+.white { color: #fff; }
+footer .copyright span a:hover { color: #fff !important; }
+.nieuws .widget { margin-bottom: 10px; }
+.post-body .project-category { display: none; }
+.post-body .post-meta { display: none; }
+.blog-content .post-meta { display: none; }
+@media only screen and (max-width: 478px)  { 
+	.header-logo .logo {
+    margin-top: 0px !important;
+		max-height: 66px !important;
+}
+	.header-slogan a { color: #f1681e; }
+.header-slogan a:hover { color: #000;}
+.vc_column_container {
+    z-index: 2;
+    padding-bottom: 25px;
+}
+	h4 { font-size: 20px !important; }
+	h1 {
+    font-size: 1.65em !important;
+    line-height: 1.3em !important;
+}
+	h2 {
+    font-size: 1.65em !important;
+    line-height: 1.3em !important;
+}
+}

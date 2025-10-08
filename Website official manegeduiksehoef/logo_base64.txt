@@ -1,0 +1,7 @@
+﻿At line:1 char:77
++ ... eadAllBytes('public/logo.png');  = [Convert]::ToBase64String(); Write ...
++                                                                  ~
+An expression was expected after '('.
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : ExpectedExpression
+ 
