@@ -1,0 +1,20 @@
+# Exclude ALL large files - upload via GitHub Releases
+*.zip
+*.mp4
+*.avi
+*.mov
+*.JPG
+*.jpg
+*.png
+*.gif
+node_modules/
+.next/
+dist/
+build/
+.env*
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+website-clean/
