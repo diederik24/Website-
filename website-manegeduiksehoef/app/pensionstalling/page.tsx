@@ -92,13 +92,13 @@ export default function PensionPage() {
             </h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-200"
+              className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-8 border border-green-200 h-full flex flex-col items-center text-center"
             >
               <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
                 <CheckCircle2 className="w-6 h-6 text-green-500 mr-3" />
@@ -106,7 +106,7 @@ export default function PensionPage() {
               </h3>
               <ul className="space-y-3">
                 {wijVerzorgen.map((item, index) => (
-                  <li key={index} className="flex items-center text-gray-700">
+                  <li key={index} className="flex items-center justify-center text-gray-700">
                     <CheckCircle className="w-4 h-4 text-green-500 mr-3 flex-shrink-0" />
                     {item}
                   </li>
@@ -119,7 +119,7 @@ export default function PensionPage() {
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
               viewport={{ once: true }}
-              className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-200"
+              className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-200 h-full flex flex-col items-center text-center"
             >
               <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center">
                 <Users className="w-6 h-6 text-blue-500 mr-3" />
@@ -127,7 +127,7 @@ export default function PensionPage() {
               </h3>
               <ul className="space-y-3">
                 {jijVerzorgt.map((item, index) => (
-                  <li key={index} className="flex items-center text-gray-700">
+                  <li key={index} className="flex items-center justify-center text-gray-700">
                     <CheckCircle className="w-4 h-4 text-blue-500 mr-3 flex-shrink-0" />
                     {item}
                   </li>
@@ -148,7 +148,7 @@ export default function PensionPage() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Onze Rijfaciliteiten
+              Onze <span className="text-pink-600">Rij</span>faciliteiten
             </h2>
             <p className="text-lg text-gray-600">
               Moderne en verlichte rijfaciliteiten voor optimale training
@@ -221,6 +221,73 @@ export default function PensionPage() {
                 </div>
               </div>
             </motion.div>
+
+            {/* Ovaalbaan */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <div className="relative h-64 md:h-80">
+                <Image
+                  src="/ovaalbaan-icelandic.jpg"
+                  alt="Ovaalbaan voor IJslandse paarden"
+                  fill
+                  className="object-cover"
+                  priority={false}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                <div className="absolute bottom-6 left-6 right-6">
+                  <motion.div
+                    className="text-white"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                  >
+                    <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                      Ovaalbaan voor IJslandse paarden
+                    </h3>
+                    <p className="text-base md:text-lg text-white/90">
+                      Ovaalbaan van 250 meter, speciaal voor IJslandse paarden trainingen.
+                    </p>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Binnenbak */}
+            <motion.div
+              className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <div className="relative h-64 md:h-80">
+                <Image
+                  src="/google-photos/Binnenbak.jpg"
+                  alt="Onze binnenbak"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                <div className="absolute bottom-6 left-6 right-6">
+                  <motion.div
+                    className="text-white"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3, duration: 0.6 }}
+                  >
+                    <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                      Onze Binnenbak
+                    </h3>
+                    <p className="text-base md:text-lg text-white/90">
+                      20 x 40 meter – overdekte rijbak voor alle weersomstandigheden.
+                    </p>
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -236,7 +303,7 @@ export default function PensionPage() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
-              Onze Faciliteiten
+              <span className="text-pink-600">Onze</span> Faciliteiten
             </h2>
           </motion.div>
 

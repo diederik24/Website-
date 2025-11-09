@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { CheckCircle, Star, Gift, Calendar, Users, Sparkles, Crown, Zap, Heart, ArrowDown } from 'lucide-react'
 
@@ -157,24 +158,17 @@ export default function LessonCard({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8 }}
             >
-              <motion.button
-                onClick={() => {
-                  // Scroll naar de aanmeld sectie
-                  const aanmeldSection = document.getElementById('aanmeldformulier')
-                  if (aanmeldSection) {
-                    const yOffset = -150
-                    const y = aanmeldSection.getBoundingClientRect().top + window.pageYOffset + yOffset
-                    window.scrollTo({ top: y, behavior: 'smooth' })
-                  }
-                }}
-                className="w-full bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 group"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <ArrowDown className="w-5 h-5 group-hover:animate-bounce" />
-                <span>Aanmelden voor Lessen</span>
-                <ArrowDown className="w-5 h-5 group-hover:animate-bounce" />
-              </motion.button>
+              <Link href="/aanmelden" className="block w-full">
+                <motion.div
+                  className="w-full bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-3 group"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <ArrowDown className="w-5 h-5 group-hover:animate-bounce" />
+                  <span>Aanmelden voor Lessen</span>
+                  <ArrowDown className="w-5 h-5 group-hover:animate-bounce" />
+                </motion.div>
+              </Link>
             </motion.div>
             
           </div>

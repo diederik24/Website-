@@ -212,6 +212,20 @@ export default function LessenPage() {
                   </div>
                 </motion.div>
 
+                {/* Duo privéles */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.1 }}
+                  className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100"
+                >
+                  <div className="text-center">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Duo Privé les</h3>
+                    <div className="text-4xl font-bold text-pink-600 mb-2">€25,00 p.p.</div>
+                    <p className="text-gray-600">45 minuten · 2 personen</p>
+                  </div>
+                </motion.div>
+
                 {/* Losse les */}
                 <motion.div
                   initial={{ opacity: 0, y: 30 }}
@@ -220,8 +234,22 @@ export default function LessenPage() {
                   className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100"
                 >
                   <div className="text-center">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Losse les</h3>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Jeugd Losse les</h3>
                     <div className="text-4xl font-bold text-pink-600 mb-4">€25,00</div>
+                    <p className="text-gray-600">60 minuten</p>
+                  </div>
+                </motion.div>
+
+                {/* Volwassenen losse les */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                  className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100"
+                >
+                  <div className="text-center">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Volwassen Losse les</h3>
+                    <div className="text-4xl font-bold text-pink-600 mb-4">€30,00</div>
                     <p className="text-gray-600">60 minuten</p>
                   </div>
                 </motion.div>
@@ -287,8 +315,14 @@ export default function LessenPage() {
                   </div>
                   Dinsdag
                 </h3>
-                <div className="bg-white/70 rounded-lg p-3 border border-pink-200">
-                  <p className="text-pink-500 italic text-sm text-center">Geen lessen</p>
+                <div className="space-y-2">
+                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Clock className="w-4 h-4 text-pink-600" />
+                      <span className="font-bold text-pink-800 text-sm">19:30-20:30</span>
+                    </div>
+                    <p className="text-pink-700 text-sm font-medium">Volwassen les</p>
+                  </div>
                 </div>
               </div>
 
@@ -348,7 +382,7 @@ export default function LessenPage() {
                       <Clock className="w-4 h-4 text-pink-600" />
                       <span className="font-bold text-pink-800 text-sm">20:00-21:00</span>
                     </div>
-                    <p className="text-pink-700 text-sm font-medium">Gemiddeld-gevorderde volwassenen (pensionles)</p>
+                    <p className="text-pink-700 text-sm font-medium">Pensionles</p>
                   </div>
                 </div>
               </div>
@@ -368,13 +402,6 @@ export default function LessenPage() {
                       <span className="font-bold text-pink-800 text-sm">13:00-15:00</span>
                     </div>
                     <p className="text-pink-700 text-sm font-medium">Privéles mogelijk</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">16:00-17:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">(word nieuwe jeugdles)</p>
                   </div>
                   <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
                     <div className="flex items-center gap-2 mb-1">
@@ -401,13 +428,6 @@ export default function LessenPage() {
                       <span className="font-bold text-pink-800 text-sm">9:30-10:30</span>
                     </div>
                     <p className="text-pink-700 text-sm font-medium text-center">Buitenrit volwassenen</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">16:00-17:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium text-center">Beginnersgroep</p>
                   </div>
                   <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
                     <div className="flex items-center justify-center gap-2 mb-1">
@@ -454,7 +474,7 @@ export default function LessenPage() {
                       <Clock className="w-4 h-4 text-pink-600" />
                       <span className="font-bold text-pink-800 text-sm">9:00-10:00</span>
                     </div>
-                    <p className="text-pink-700 text-sm font-medium">Gemiddeld-gevorderde volwassenen (pensionles)</p>
+                    <p className="text-pink-700 text-sm font-medium">Pensionles</p>
                   </div>
                   <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
                     <div className="flex items-center gap-2 mb-1">
@@ -468,7 +488,7 @@ export default function LessenPage() {
                       <Clock className="w-4 h-4 text-pink-600" />
                       <span className="font-bold text-pink-800 text-sm">11:00-12:00</span>
                     </div>
-                    <p className="text-pink-700 text-sm font-medium">Gemiddelde jeugd</p>
+                    <p className="text-pink-700 text-sm font-medium">Beginners Jeugd</p>
                   </div>
                 </div>
               </div>

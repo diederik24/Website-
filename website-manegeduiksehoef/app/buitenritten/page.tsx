@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { Clock, Users, Shield, Star, Calendar, MapPin, Mail, CheckCircle, AlertTriangle, Coffee, Utensils, ChevronLeft, ChevronRight, X, Timer } from 'lucide-react'
+import { Clock, Users, Shield, Star, Calendar, MapPin, CheckCircle, AlertTriangle, Coffee, Utensils, ChevronLeft, ChevronRight, X, Timer, Snowflake } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
 export default function BuitenrittenPage() {
@@ -23,6 +23,27 @@ export default function BuitenrittenPage() {
     notes: ''
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const isDateWithinWinterStop = (date: Date) => {
+    const year = date.getFullYear()
+    const winterStart = new Date(year, 10, 1) // 1 november
+    const winterEnd = new Date(year + 1, 2, 31, 23, 59, 59, 999) // 31 maart volgend jaar
+
+    if (date >= winterStart) {
+      return date <= winterEnd
+    }
+
+    const prevWinterStart = new Date(year - 1, 10, 1)
+    const prevWinterEnd = new Date(year, 2, 31, 23, 59, 59, 999)
+
+    return date >= prevWinterStart && date <= prevWinterEnd
+  }
+
+  const isWinterStopDate = (day: number, month: number, year: number) => {
+    return isDateWithinWinterStop(new Date(year, month, day))
+  }
+
+  const isWinterStopNow = isDateWithinWinterStop(new Date())
 
   const months = [
     'Januari', 'Februari', 'Maart', 'April', 'Mei', 'Juni',
@@ -76,6 +97,10 @@ export default function BuitenrittenPage() {
   const handleDateClick = (day: number, isArrangement: boolean) => {
     // Alleen toekomstige datums toestaan
     if (!isFutureDate(day, currentMonth, currentYear)) {
+      return
+    }
+
+    if (isWinterStopDate(day, currentMonth, currentYear)) {
       return
     }
     
@@ -152,20 +177,28 @@ export default function BuitenrittenPage() {
 
   // Afteltimer voor volgende buitenrit
   useEffect(() => {
-    const getNextSunday = () => {
+    const getNextAvailableSunday = () => {
       const now = new Date()
-      const currentDay = now.getDay()
-      const daysUntilSunday = currentDay === 0 ? 7 : 7 - currentDay // Als het vandaag zondag is, volgende week
-      
-      const nextSunday = new Date(now)
-      nextSunday.setDate(now.getDate() + daysUntilSunday)
-      nextSunday.setHours(10, 0, 0, 0) // 10:00 uur
-      
-      return nextSunday
+      let candidate = new Date(now)
+      candidate.setHours(10, 0, 0, 0)
+
+      for (let i = 0; i < 730; i++) {
+        if (candidate > now && candidate.getDay() === 0 && !isDateWithinWinterStop(candidate)) {
+          return candidate
+        }
+        candidate.setDate(candidate.getDate() + 1)
+      }
+
+      return null
     }
 
     const updateTimer = () => {
-      const nextSunday = getNextSunday()
+      const nextSunday = getNextAvailableSunday()
+      if (!nextSunday) {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+        return
+      }
+
       const now = new Date()
       const difference = nextSunday.getTime() - now.getTime()
 
@@ -186,6 +219,8 @@ export default function BuitenrittenPage() {
 
     return () => clearInterval(interval)
   }, [])
+
+  const calendarMonthInWinterStop = isDateWithinWinterStop(new Date(currentYear, currentMonth, 1))
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
@@ -256,6 +291,31 @@ export default function BuitenrittenPage() {
         </div>
       </section>
 
+      {isWinterStopNow && (
+        <section className="relative bg-gradient-to-r from-blue-950 via-purple-900 to-blue-950 py-10 text-white overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_60%)]"></div>
+          <div className="max-w-6xl mx-auto px-6 relative z-10">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="flex items-start md:items-center gap-4">
+                <div className="p-3 bg-white/10 rounded-2xl border border-white/20">
+                  <Snowflake className="w-10 h-10 text-cyan-200" />
+                </div>
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Winterstop Buitenritten</h2>
+                  <p className="mt-2 text-sm md:text-base text-white/80 leading-relaxed max-w-2xl">
+                    Van <strong className="text-white">1 november</strong> tot en met <strong className="text-white">31 maart</strong> plannen we geen buitenritten.
+                    Zodra het voorjaar begint, rijden we weer elke zondag uit. Meld je vast aan voor ritten vanaf 1 april!
+                  </p>
+                </div>
+              </div>
+              <div className="rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white/80">
+                Laatste winterstopdag:&nbsp;
+                <span className="font-semibold text-white">31 maart</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Quick Navigation */}
       <section className="py-8 bg-white/80 backdrop-blur-sm border-b border-gray-200">
@@ -618,9 +678,15 @@ export default function BuitenrittenPage() {
                 <Calendar className="w-6 h-6 text-green-600" />
                 Meld je aan voor de buitenrit
               </h2>
-              <p className="text-sm text-gray-600 mb-4">
-                Klik op één van de <span className="text-green-600 font-semibold">groene</span> dagen om je aan te melden
-              </p>
+              {calendarMonthInWinterStop ? (
+                <p className="text-sm text-gray-600 mb-4">
+                  Tijdens de winterstop (1 november t/m 31 maart) plannen we geen buitenritten. Selecteer een maand vanaf april om een rit te reserveren.
+                </p>
+              ) : (
+                <p className="text-sm text-gray-600 mb-4">
+                  Klik op één van de <span className="text-green-600 font-semibold">groene</span> dagen om je aan te melden
+                </p>
+              )}
               
               {/* Kleine Afteltimer */}
               <div className="relative rounded-lg p-3 mb-4 overflow-hidden">
@@ -722,9 +788,11 @@ export default function BuitenrittenPage() {
                 const isSundayDay = isSunday(day, currentMonth, currentYear)
                 const isArrangementDay = isArrangement(day, currentMonth)
                 const isFuture = isFutureDate(day, currentMonth, currentYear)
+                const currentDate = new Date(currentYear, currentMonth, day)
+                const isWinterStopDay = isDateWithinWinterStop(currentDate)
                 
                 if (isSundayDay) {
-                  if (isFuture) {
+                  if (isFuture && !isWinterStopDay) {
                     // Toekomstige zondag - klikbaar
                     return (
                       <motion.div
@@ -748,6 +816,16 @@ export default function BuitenrittenPage() {
                           <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-purple-500 rounded-full"></div>
                         )}
                       </motion.div>
+                    )
+                  } else if (isFuture && isWinterStopDay) {
+                    return (
+                      <div key={day} className="h-8 bg-blue-50 border-2 border-blue-200 rounded flex items-center justify-center relative text-xs">
+                        <div className="font-bold text-blue-600">{day}</div>
+                        <Snowflake className="absolute -top-0.5 -right-0.5 w-3 h-3 text-blue-400" />
+                        {isArrangementDay && (
+                          <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-purple-400 rounded-full"></div>
+                        )}
+                      </div>
                     )
                   } else {
                     // Verleden zondag - niet klikbaar, grijs
@@ -774,7 +852,7 @@ export default function BuitenrittenPage() {
             {/* Info tekst */}
             <div className="text-center mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-xs text-gray-600">
-                <strong>Let op:</strong> Buitenritten gaan alleen door bij voldoende aanmeldingen. Je kunt je alleen aanmelden voor toekomstige datums.
+                <strong>Let op:</strong> Buitenritten gaan alleen door bij voldoende aanmeldingen. Je kunt je alleen aanmelden voor toekomstige datums buiten de winterstop (1 november t/m 31 maart).
               </p>
             </div>
           </motion.div>

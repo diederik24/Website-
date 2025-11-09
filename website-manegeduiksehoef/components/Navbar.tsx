@@ -28,7 +28,6 @@ const Navbar = () => {
     { href: '/lessen', label: 'Lessen' },
     { href: '/buitenritten', label: 'Buitenritten' },
     { href: '/pensionstalling', label: 'Pensionstalling' },
-    { href: '/ponykamp', label: 'Ponykamp' },
     { href: '/onze-paarden', label: 'Onze Paarden' }
   ]
 
@@ -278,16 +277,36 @@ const Navbar = () => {
                 <p className="text-pink-100 text-sm">Menu</p>
               </div>
             </div>
-            <TouchOptimizedButton
-              onClick={() => setIsMenuOpen(false)}
-              className="p-3 rounded-full bg-white/20 hover:bg-white/30 transition-all duration-300"
+            <div
+              onClick={() => {
+                console.log('X button clicked!')
+                setIsMenuOpen(false)
+              }}
+              style={{
+                padding: '12px',
+                borderRadius: '50%',
+                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                cursor: 'pointer',
+                minHeight: '48px',
+                minWidth: '48px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                touchAction: 'manipulation',
+                position: 'relative',
+                zIndex: 50
+              }}
             >
               <X className="w-6 h-6 text-white" />
-            </TouchOptimizedButton>
+            </div>
           </div>
           
           {/* Navigation Items */}
-          <div className="flex-1 px-6 py-6 space-y-3 relative z-10">
+          <div className="flex-1 px-6 py-6 space-y-3 relative z-10 bg-white overflow-y-auto" style={{ 
+            paddingBottom: 'calc(2rem + env(safe-area-inset-bottom))',
+            maxHeight: 'calc(100vh - 200px)',
+            minHeight: 'calc(100vh - 200px)'
+          }}>
             {navItems.map((item, index) => (
               <motion.div
                 key={item.href}
@@ -304,16 +323,7 @@ const Navbar = () => {
                     className="block px-6 py-4 text-gray-700 hover:text-pink-600 hover:bg-gradient-to-r hover:from-pink-50 hover:to-rose-50 rounded-2xl transition-all duration-300 font-semibold text-lg border border-transparent hover:border-pink-200 hover:shadow-lg"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-10 h-10 bg-gradient-to-br from-pink-100 to-rose-100 rounded-full flex items-center justify-center">
-                        <span className="text-pink-600 text-lg">
-                          {item.label === 'Lessen' ? '📚' : 
-                           item.label === 'Buitenritten' ? '🌲' :
-                           item.label === 'Pensionstalling' ? '🏠' :
-                           item.label === 'Ponykamp' ? '🎪' :
-                           item.label === 'Onze Paarden' ? '🐎' : '📄'}
-                        </span>
-                      </div>
-                      <span>{item.label}</span>
+                      <span className="text-pink-600 font-semibold">{item.label}</span>
                     </div>
                   </Link>
                 </TouchOptimizedButton>
@@ -342,33 +352,38 @@ const Navbar = () => {
                 </a>
               </TouchOptimizedButton>
             </motion.div>
-          </div>
-          
-          {/* Footer met contact info */}
-          <div className="p-6 bg-gradient-to-r from-gray-50 to-pink-50 border-t border-pink-200 relative z-10">
-            <div className="space-y-4">
-              <h3 className="text-lg font-bold text-gray-800 mb-3">📞 Contact</h3>
-              <div className="space-y-3">
-                <div className="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
-                  <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                    <Phone className="w-5 h-5 text-green-600" />
+            
+            {/* Contact info binnen de scrollbare sectie */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: (navItems.length + 1) * 0.1, duration: 0.4, ease: "easeOut" }}
+              className="pt-6 mt-6 border-t border-pink-200"
+            >
+              <div className="space-y-4">
+                <h3 className="text-lg font-bold text-gray-800 mb-3">📞 Contact</h3>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl shadow-sm">
+                    <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                      <Phone className="w-5 h-5 text-green-600" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800">+31 620685310</p>
+                      <p className="text-sm text-gray-600">Bel ons direct</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-semibold text-gray-800">+31 620685310</p>
-                    <p className="text-sm text-gray-600">Bel ons direct</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm">
-                  <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                    <Mail className="w-5 h-5 text-blue-600" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-800">info@manegeduiksehoef.nl</p>
-                    <p className="text-sm text-gray-600">Stuur een e-mail</p>
+                  <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-xl shadow-sm">
+                    <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                      <Mail className="w-5 h-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-800">info@manegeduiksehoef.nl</p>
+                      <p className="text-sm text-gray-600">Stuur een e-mail</p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
         </MobileMenu>

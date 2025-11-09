@@ -79,7 +79,7 @@ export default function GoogleReviews({ placeId, apiKey }: GoogleReviewsProps) {
         author_name: "Jane",
         rating: 0,
         relative_time_description: "",
-        text: "Manege Duikse Hoef is echt een fantastische plek! Alles straalt hier liefde en zorg voor de paarden uit. De paarden worden met veel aandacht en respect verzorgd, wat meteen opvalt zodra je hier binnenkomt. Je ziet dat de paarden zich helemaal thuis voelen. Ook merk je dat ze hier over alles goed nadenken. De accommodatie is uitstekend: alles is netjes, ruim, goed onderhouden en voorzien van alles wat je nodig hebt om optimaal te kunnen genieten van je paard. Daarnaast is de ligging perfect – vlakbij de bossen. Dat maakt buitenritten niet alleen makkelijk bereikbaar, maar ook ontzettend mooi en rustgevend. Je kunt hier eindeloos genieten van de natuur samen met je paard. Kortom: een toplocatie waar welzijn van de paarden en plezier voor de ruiters hand in hand gaan. Een absolute aanrader!",
+        text: "Manege Duikse Hoef is een prachtige plek waar het welzijn van de paarden centraal staat. De paarden worden met veel liefde en zorg verzorgd en dat merk je meteen. De accommodatie is netjes, ruim en goed onderhouden, en de ligging bij de bossen maakt buitenritten geweldig mooi. Een toplocatie waar zowel paarden als ruiters zich helemaal thuis voelen. Aanrader!",
         time: Date.now(),
         language: "nl"
       }

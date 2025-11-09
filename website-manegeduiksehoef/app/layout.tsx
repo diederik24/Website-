@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import './spectacular-effects.css'
@@ -10,6 +10,7 @@ import PerformanceMonitor from '@/components/PerformanceMonitor'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://manegeduiksehoef.nl'),
   title: 'Manege Duikse Hoef - Rijlessen en Pensionstalling',
   description: 'Professionele rijlessen en uitstekende pensionstalling in een warme, veilige omgeving. Ervaren instructeurs en verzorgers voor uw paard.',
   keywords: 'manege, rijlessen, pensionstalling, paarden, Duikse Hoef, instructeurs, verzorging, ponykamp, dressuur, springen',
@@ -40,11 +41,12 @@ export const metadata: Metadata = {
     title: 'Manege Duikse Hoef - Rijlessen en Pensionstalling',
     description: 'Professionele rijlessen en uitstekende pensionstalling in een warme, veilige omgeving.',
   },
-  viewport: {
-    width: 'device-width',
-    initialScale: 1,
-    maximumScale: 1,
-  },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
 }
 
 export default function RootLayout({

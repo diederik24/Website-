@@ -37,7 +37,7 @@ export default function Home() {
     <>
       {/* Enhanced Hero Section with Modern Design */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        {/* Enhanced Background Video with Overlay */}
+        {/* Enhanced Background with Overlay */}
         <div className="absolute inset-0 z-0">
           <video
             autoPlay
@@ -47,20 +47,26 @@ export default function Home() {
             preload="metadata"
             className="absolute inset-0 w-full h-full object-cover"
             style={{
-              filter: 'brightness(0.7) contrast(1.2) saturate(1.1)',
-              transform: 'scale(1.05)',
-              transformOrigin: 'center',
+              filter: 'brightness(0.75) contrast(1.25) saturate(1.15)',
               willChange: 'transform'
             }}
             onError={(e) => {
-              console.log('Video failed to load, using fallback');
-              e.currentTarget.style.display = 'none';
+              console.log('Video failed to load, using fallback')
+              e.currentTarget.style.display = 'none'
+              // fallback to background image
+              const fallback = document.getElementById('hero-fallback')
+              if (fallback) fallback.style.display = 'block'
             }}
           >
             <source src="/background-video.mp4" type="video/mp4" />
           </video>
-          
-          {/* Enhanced Gradient Overlay */}
+          <div
+            id="hero-fallback"
+            className="hidden absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: "url('/google-photos/ponykamp-banner.jpg')",
+            }}
+          />
           <div className="absolute inset-0 bg-gradient-to-br from-purple-900/60 via-pink-800/50 to-indigo-900/70"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
         </div>
@@ -517,7 +523,7 @@ export default function Home() {
             >
               <div className="text-4xl mb-4">👨‍👩‍👧‍👦</div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Voor kinderen én volwassenen</h3>
-              <p className="text-gray-600 text-sm">Of je nu 8 of 80 bent, bij ons is iedereen welkom</p>
+              <p className="text-gray-600 text-sm">Vanaf 7 jaar kan je bij ons leren paardrijden</p>
             </motion.div>
 
             {/* Persoonlijke begeleiding */}
@@ -706,7 +712,7 @@ export default function Home() {
       {/* Main Content Grid - Onze Diensten */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
             
             {/* Lessen */}
             <motion.div 
@@ -818,44 +824,6 @@ export default function Home() {
                   whileTap={{ scale: 0.95 }}
                 >
                   BEKIJK PENSION
-                </motion.button>
-              </Link>
-            </motion.div>
-
-            {/* Ponykamp */}
-            <motion.div 
-              className="text-center group flex flex-col h-full"
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              whileHover={{ y: -10 }}
-            >
-              <div className="relative mb-6">
-                <div className="w-full h-64 rounded-2xl overflow-hidden group-hover:shadow-xl transition-all duration-300">
-                  <Image
-                    src="/ponykamp.jpg"
-                    alt="Manege Duikse Hoef - Ponykamp"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <motion.div
-                  className="absolute -top-2 -right-2 w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center"
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
-                >
-                  <Award className="w-5 h-5 text-white" />
-                </motion.div>
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Ponykamp</h3>
-              <p className="text-gray-600 mb-6 flex-grow">Leuke ponykampen voor kinderen met paardrijden en activiteiten</p>
-              <Link href="/ponykamp" className="mt-auto">
-                <motion.button 
-                  className="bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-pink-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl w-full"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  BEKIJK KAMP
                 </motion.button>
               </Link>
             </motion.div>
