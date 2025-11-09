@@ -38,35 +38,20 @@ export default function Home() {
       {/* Enhanced Hero Section with Modern Design */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Enhanced Background with Overlay */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <video
             autoPlay
             muted
             loop
             playsInline
-            preload="metadata"
+            preload="auto"
             className="absolute inset-0 w-full h-full object-cover"
             style={{
               filter: 'brightness(0.75) contrast(1.25) saturate(1.15)',
-              willChange: 'transform'
-            }}
-            onError={(e) => {
-              console.log('Video failed to load, using fallback')
-              e.currentTarget.style.display = 'none'
-              // fallback to background image
-              const fallback = document.getElementById('hero-fallback')
-              if (fallback) fallback.style.display = 'block'
             }}
           >
             <source src="/background-video.mp4" type="video/mp4" />
           </video>
-          <div
-            id="hero-fallback"
-            className="hidden absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage: "url('/google-photos/ponykamp-banner.jpg')",
-            }}
-          />
           <div className="absolute inset-0 bg-gradient-to-br from-purple-900/60 via-pink-800/50 to-indigo-900/70"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
         </div>
