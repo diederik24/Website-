@@ -36,10 +36,15 @@ export default function Home() {
   return (
     <>
       {/* Enhanced Hero Section with Modern Design */}
-      <section
-        className="relative min-h-screen flex items-center justify-center overflow-hidden bg-center bg-cover"
-        style={{ backgroundImage: "url('/banner.png')" }}
-      >
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <Image
+          src="/banner.png"
+          alt="Achtergrond Manege Duikse Hoef"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
 
         {/* Logo Overlay */}
         <div className="absolute inset-0 z-20 flex items-center justify-center">
