@@ -39,15 +39,15 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Enhanced Background with Overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <div
-            className="absolute inset-0 w-full h-full bg-cover bg-center"
-            style={{
-              backgroundImage: "url('/banner.png')",
-              filter: 'brightness(0.78) contrast(1.25) saturate(1.15)',
-            }}
+          <Image
+            src="/banner.png"
+            alt="Achtergrond Manege Duikse Hoef"
+            fill
+            priority
+            className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/60 via-pink-800/45 to-indigo-900/65"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-pink-800/30 to-indigo-900/40"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent"></div>
         </div>
         
         {/* Floating Background Elements */}
