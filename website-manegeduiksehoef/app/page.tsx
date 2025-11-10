@@ -33,65 +33,19 @@ function AnimatedCounter({ end, duration = 2000 }: { end: number; duration?: num
 }
 
 export default function Home() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [videoLoaded, setVideoLoaded] = useState(false)
-
-  useEffect(() => {
-    const video = videoRef.current
-    if (!video) return
-
-    const attemptPlay = () => {
-      video.play().catch(() => {
-        // Autoplay might be blocked; ensure muted and try again after a user gesture
-        video.muted = true
-      })
-    }
-
-    attemptPlay()
-
-    const visibilityHandler = () => {
-      if (!document.hidden) {
-        attemptPlay()
-      }
-    }
-
-    document.addEventListener('visibilitychange', visibilityHandler)
-    return () => document.removeEventListener('visibilitychange', visibilityHandler)
-  }, [])
-
   return (
     <>
       {/* Enhanced Hero Section with Modern Design */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Enhanced Background with Overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          {!videoLoaded && (
-            <div
-              className="absolute inset-0 w-full h-full bg-cover bg-center"
-              style={{
-                backgroundImage: "url('/google-photos/buitenritten-banner.jpg')",
-                filter: 'brightness(0.75) contrast(1.2)',
-              }}
-            />
-          )}
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
-              videoLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
+          <div
+            className="absolute inset-0 w-full h-full bg-cover bg-center"
             style={{
+              backgroundImage: "url('/banner.png')",
               filter: 'brightness(0.78) contrast(1.25) saturate(1.15)',
             }}
-            onLoadedData={() => setVideoLoaded(true)}
-            onPlay={() => setVideoLoaded(true)}
-          >
-            <source src="/background-video.mp4" type="video/mp4" />
-          </video>
+          />
           <div className="absolute inset-0 bg-gradient-to-br from-purple-900/60 via-pink-800/45 to-indigo-900/65"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent"></div>
         </div>
