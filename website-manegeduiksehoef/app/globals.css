@@ -310,3 +310,12 @@ a img {
   user-select: none;
   pointer-events: none;
 }
+
+.hero-banner {
+  background-image: url('/banner.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  min-height: 450px;
+}
