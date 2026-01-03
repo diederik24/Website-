@@ -63,7 +63,7 @@ const fallbackPaarden = [
     leeftijd: 'Onbekend',
     geslacht: 'Merrie' as const,
     kleur: 'Zwart',
-    beschrijving: 'Vina is een lieve merrie die heel erg geliefd is bij onze manege kinderen, ze loopt mee bij de beginners lessen maar ook bij de gemiddeld-gevorderden. Vina zit heel lekker door haar vlakke beweging.',
+    beschrijving: 'Vina is een lieve merrie die heel erg geliefd is bij onze manege kinderen, ze loopt mee bij de beginnerslessen maar ook bij de gemiddeld-gevorderden. Vina zit heel lekker door haar vlakke beweging.',
     hoofdfoto: '/paarden/vina.jpg',
     foto_urls: ['/paarden/vina.jpg'],
     eigenschappen: ['Lief', 'Betrouwbaar', 'Unieke gangen']
@@ -171,7 +171,7 @@ const fallbackPaarden = [
     leeftijd: 'Onbekend',
     geslacht: 'Merrie' as const,
     kleur: 'Bruin',
-    beschrijving: 'Linde is een hele lieve en rustige merrie. Ze loopt altijd op haar gemakje mee in de lessen maar doet wel altijd haar best voor je. Linde vind het leuk om mee te gaan op buitenrit. Linde is geschikt voor alle niveau\'s.',
+    beschrijving: 'Linde is een hele lieve en rustige merrie. Ze loopt altijd op haar gemakje mee in de lessen maar doet wel altijd haar best voor je. Linde vindt het leuk om mee te gaan op buitenrit. Linde is geschikt voor alle niveaus.',
     hoofdfoto: '/paarden/linde.jpg',
     foto_urls: ['/paarden/linde.jpg'],
     eigenschappen: ['Lief', 'Geduldig', 'Allrounder']
@@ -219,7 +219,7 @@ const fallbackPaarden = [
     leeftijd: 'Onbekend',
     geslacht: 'Ruin' as const,
     kleur: 'Bruin',
-    beschrijving: 'Platini is de oude vertrouwde van stal. Platini is ontzettend lief en kan soms wat eigenwijs zijn omdat hij graag de stal uit wilt. Hij vind het heerlijk om mee te gaan met de buitenritten en om de kinderen te leren paardrijden door zijn ervaringen. Gezien zijn leeftijd loopt Platini nog mee met de beginners lessen of met de privélessen.',
+    beschrijving: 'Platini is de oude vertrouwde van stal. Platini is ontzettend lief en kan soms wat eigenwijs zijn omdat hij graag de stal uit wil. Hij vindt het heerlijk om mee te gaan met de buitenritten en om de kinderen te leren paardrijden door zijn ervaringen. Gezien zijn leeftijd loopt Platini nog mee met de beginnerslessen of met de privélessen.',
     hoofdfoto: '/paarden/platini.jpg',
     foto_urls: ['/paarden/platini.jpg'],
     eigenschappen: ['Betrouwbaar', 'Ervaren', 'Allrounder']
@@ -243,7 +243,7 @@ const fallbackPaarden = [
     leeftijd: 'Onbekend',
     geslacht: 'Ruin' as const,
     kleur: 'Schimmel',
-    beschrijving: 'Jelle is het bekendste paard van onze manege. Hij loopt al heel lang mee met de lessen en heeft al heel veel kinderen leren paardrijden. Jelle is heel lief maar ook heel eigenwijs, hij doet zelf waar hij zin in heeft, en dat is vaak de hoeken afsnijden. Zijn grote vriend is Hugo. Gezien zijn leeftijd loopt Jelle nog mee met de beginners lessen of met de privélessen.',
+    beschrijving: 'Jelle is het bekendste paard van onze manege. Hij loopt al heel lang mee met de lessen en heeft al heel veel kinderen leren paardrijden. Jelle is heel lief maar ook heel eigenwijs, hij doet zelf waar hij zin in heeft, en dat is vaak de hoeken afsnijden. Zijn grote vriend is Hugo. Gezien zijn leeftijd loopt Jelle nog mee met de beginnerslessen of met de privélessen.',
     hoofdfoto: '/paarden/jelle.jpg',
     foto_urls: ['/paarden/jelle.jpg'],
     eigenschappen: ['Eigenwijs', 'Lief', 'Grappig']
@@ -255,7 +255,7 @@ const fallbackPaarden = [
     leeftijd: 'Onbekend',
     geslacht: 'Ruin' as const,
     kleur: 'Bruin',
-    beschrijving: 'Hugo is een hele lieve en ervaren ruin die ook al lang mee loopt met de lessen. Zijn grote vriend is Jelle, ze rijden graag samen in de les. Gezien zijn leeftijd loopt Hugo nog mee met de beginners lessen of met de privélessen.',
+    beschrijving: 'Hugo is een hele lieve en ervaren ruin die ook al lang mee loopt met de lessen. Zijn grote vriend is Jelle, ze rijden graag samen in de les. Gezien zijn leeftijd loopt Hugo nog mee met de beginnerslessen of met de privélessen.',
     hoofdfoto: '/paarden/hugo.jpg',
     foto_urls: ['/paarden/hugo.jpg'],
     eigenschappen: ['Lief', 'Ervaren', 'Betrouwbaar']
@@ -336,7 +336,7 @@ export default function OnzePaardenPage() {
       leeftijd: 'Onbekend',
       geslacht: 'Merrie' as const,
       kleur: 'Zwart',
-      beschrijving: 'Vina is een lieve merrie die heel erg geliefd is bij onze manege kinderen, ze loopt mee bij de beginners lessen maar ook bij de gemiddeld-gevorderden. Vina zit heel lekker door haar vlakke beweging.',
+      beschrijving: 'Vina is een lieve merrie die heel erg geliefd is bij onze manege kinderen, ze loopt mee bij de beginnerslessen maar ook bij de gemiddeld-gevorderden. Vina zit heel lekker door haar vlakke beweging.',
       hoofdfoto: '/paarden/vina.jpg',
       foto_urls: ['/paarden/vina.jpg'],
       eigenschappen: ['Lief', 'Betrouwbaar', 'Unieke gangen']
@@ -444,7 +444,7 @@ export default function OnzePaardenPage() {
       leeftijd: 'Onbekend',
       geslacht: 'Merrie' as const,
       kleur: 'Bruin',
-      beschrijving: 'Linde is een hele lieve en rustige merrie. Ze loopt altijd op haar gemakje mee in de lessen maar doet wel altijd haar best voor je. Linde vind het leuk om mee te gaan op buitenrit. Linde is geschikt voor alle niveau\'s.',
+      beschrijving: 'Linde is een hele lieve en rustige merrie. Ze loopt altijd op haar gemakje mee in de lessen maar doet wel altijd haar best voor je. Linde vindt het leuk om mee te gaan op buitenrit. Linde is geschikt voor alle niveaus.',
       hoofdfoto: '/paarden/linde.jpg',
       foto_urls: ['/paarden/linde.jpg'],
       eigenschappen: ['Lief', 'Geduldig', 'Allrounder']
@@ -492,7 +492,7 @@ export default function OnzePaardenPage() {
       leeftijd: 'Onbekend',
       geslacht: 'Ruin' as const,
       kleur: 'Bruin',
-      beschrijving: 'Platini is de oude vertrouwde van stal. Platini is ontzettend lief en kan soms wat eigenwijs zijn omdat hij graag de stal uit wilt. Hij vind het heerlijk om mee te gaan met de buitenritten en om de kinderen te leren paardrijden door zijn ervaringen. Gezien zijn leeftijd loopt Platini nog mee met de beginners lessen of met de privélessen.',
+      beschrijving: 'Platini is de oude vertrouwde van stal. Platini is ontzettend lief en kan soms wat eigenwijs zijn omdat hij graag de stal uit wil. Hij vindt het heerlijk om mee te gaan met de buitenritten en om de kinderen te leren paardrijden door zijn ervaringen. Gezien zijn leeftijd loopt Platini nog mee met de beginnerslessen of met de privélessen.',
       hoofdfoto: '/paarden/platini.jpg',
       foto_urls: ['/paarden/platini.jpg'],
       eigenschappen: ['Betrouwbaar', 'Ervaren', 'Allrounder']
@@ -516,7 +516,7 @@ export default function OnzePaardenPage() {
       leeftijd: 'Onbekend',
       geslacht: 'Ruin' as const,
       kleur: 'Schimmel',
-      beschrijving: 'Jelle is het bekendste paard van onze manege. Hij loopt al heel lang mee met de lessen en heeft al heel veel kinderen leren paardrijden. Jelle is heel lief maar ook heel eigenwijs, hij doet zelf waar hij zin in heeft, en dat is vaak de hoeken afsnijden. Zijn grote vriend is Hugo. Gezien zijn leeftijd loopt Jelle nog mee met de beginners lessen of met de privélessen.',
+      beschrijving: 'Jelle is het bekendste paard van onze manege. Hij loopt al heel lang mee met de lessen en heeft al heel veel kinderen leren paardrijden. Jelle is heel lief maar ook heel eigenwijs, hij doet zelf waar hij zin in heeft, en dat is vaak de hoeken afsnijden. Zijn grote vriend is Hugo. Gezien zijn leeftijd loopt Jelle nog mee met de beginnerslessen of met de privélessen.',
       hoofdfoto: '/paarden/jelle.jpg',
       foto_urls: ['/paarden/jelle.jpg'],
       eigenschappen: ['Eigenwijs', 'Lief', 'Grappig']
@@ -528,7 +528,7 @@ export default function OnzePaardenPage() {
       leeftijd: 'Onbekend',
       geslacht: 'Ruin' as const,
       kleur: 'Bruin',
-      beschrijving: 'Hugo is een hele lieve en ervaren ruin die ook al lang mee loopt met de lessen. Zijn grote vriend is Jelle, ze rijden graag samen in de les. Gezien zijn leeftijd loopt Hugo nog mee met de beginners lessen of met de privélessen.',
+      beschrijving: 'Hugo is een hele lieve en ervaren ruin die ook al lang mee loopt met de lessen. Zijn grote vriend is Jelle, ze rijden graag samen in de les. Gezien zijn leeftijd loopt Hugo nog mee met de beginnerslessen of met de privélessen.',
       hoofdfoto: '/paarden/hugo.jpg',
       foto_urls: ['/paarden/hugo.jpg'],
       eigenschappen: ['Lief', 'Rustig', 'Betrouwbaar']

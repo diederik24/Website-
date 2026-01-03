@@ -146,7 +146,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent">
                 <div className="absolute bottom-4 left-4 text-white">
                   <h3 className="text-xl font-bold">Onze Kantine</h3>
-                  <p className="text-sm">Gezeligheid in onze kantine met uitzicht op onze binnen rijbak</p>
+                  <p className="text-sm">Gezelligheid in onze kantine met uitzicht op onze binnenrijbak</p>
                 </div>
               </div>
             </motion.div>
@@ -221,7 +221,7 @@ export default function Home() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent">
                 <div className="absolute bottom-4 left-4 text-white">
                   <h3 className="text-xl font-bold">Onze Buitenbak</h3>
-                  <p className="text-sm">20 x 60 meter - altijd goed te rijden, het hele jaar door. Savonds verlicht.</p>
+                  <p className="text-sm">20 x 60 meter - altijd goed te rijden, het hele jaar door. 's Avonds verlicht.</p>
                 </div>
               </div>
             </motion.div>
@@ -933,7 +933,7 @@ export default function Home() {
                 </div>
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-3">Zadelkamer</h3>
-              <p className="text-gray-600 text-sm">Afgesloten en beveiligde zadelkamer met ruime, persoonlijke zadelkast ook meldkamer beveiliging</p>
+              <p className="text-gray-600 text-sm">Afgesloten en beveiligde zadelkamer met ruime, persoonlijke zadelkast en meldkamerbeveiliging</p>
             </motion.div>
 
             {/* Paddocks */}

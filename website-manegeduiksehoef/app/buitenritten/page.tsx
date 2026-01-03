@@ -416,7 +416,7 @@ export default function BuitenrittenPage() {
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Met Arrangement</h3>
               <p className="text-gray-600 text-center leading-relaxed">
-                Een buitenrit met arrangement is mogelijk bij Manege Duiksehoef. Koffie, buitenrit en een lekkere lunch!
+                Een buitenrit met arrangement is mogelijk bij Manege Duikse Hoef. Koffie, buitenrit en een lekkere lunch!
               </p>
             </motion.div>
           </div>

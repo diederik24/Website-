@@ -69,7 +69,7 @@ export default function LessenPage() {
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <Calendar className="w-6 h-6 text-green-600 mt-1 flex-shrink-0" />
-                    <p className="text-gray-700">Kinderen mogen vanaf de leeftijd van 7 jaar leren paardrijden bij Manege de Duikse Hoef</p>
+                    <p className="text-gray-700">Kinderen mogen vanaf de leeftijd van 7 jaar leren paardrijden bij Manege Duikse Hoef</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <Star className="w-6 h-6 text-blue-600 mt-1 flex-shrink-0" />
@@ -91,7 +91,7 @@ export default function LessenPage() {
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <Heart className="w-6 h-6 text-pink-600 mt-1 flex-shrink-0" />
-                    <p className="text-gray-700">Het is niet alleen leren rijden, maar ook de verzorging, het poetsen, op/en af zadelen hoort erbij</p>
+                    <p className="text-gray-700">Het is niet alleen leren rijden, maar ook de verzorging, het poetsen, op- en afzadelen hoort erbij</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <Award className="w-6 h-6 text-pink-600 mt-1 flex-shrink-0" />

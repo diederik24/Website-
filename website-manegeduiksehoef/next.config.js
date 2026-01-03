@@ -12,9 +12,11 @@ const nextConfig = {
       },
     ],
   },
-  swcMinify: true, // Enable minification for production
   experimental: {
     forceSwcTransforms: false,
+  },
+  turbopack: {
+    root: __dirname,
   },
   // Production optimizations
   compress: true,

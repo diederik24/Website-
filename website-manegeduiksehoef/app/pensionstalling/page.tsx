@@ -182,7 +182,7 @@ export default function PensionPage() {
                       Onze Buitenbak
                     </h3>
                     <p className="text-base md:text-lg text-white/90">
-                      20 x 60 meter – altijd goed te rijden, het hele jaar door. Savonds verlicht voor late trainingen.
+                      20 x 60 meter – altijd goed te rijden, het hele jaar door. 's Avonds verlicht voor late trainingen.
                     </p>
                   </motion.div>
                 </div>
@@ -215,7 +215,7 @@ export default function PensionPage() {
                       Onze Longeercirkel
                     </h3>
                     <p className="text-base md:text-lg text-white/90">
-                      Ruime longeercirkel, gedraineerd en met houten omheining. Savonds verlicht voor veilige training.
+                      Ruime longeercirkel, gedraineerd en met houten omheining. 's Avonds verlicht voor veilige training.
                     </p>
                   </motion.div>
                 </div>
