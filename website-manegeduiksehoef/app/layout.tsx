@@ -18,6 +18,10 @@ export const metadata: Metadata = {
   authors: [{ name: 'Manege Duikse Hoef' }],
   creator: 'Manege Duikse Hoef',
   publisher: 'Manege Duikse Hoef',
+  icons: {
+    icon: '/faviconroze.png',
+    apple: '/faviconroze.png',
+  },
   robots: {
     index: true,
     follow: true,
