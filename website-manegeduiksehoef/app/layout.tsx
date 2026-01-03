@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import './spectacular-effects.css'
 import Navbar from '@/components/Navbar'
@@ -59,8 +60,90 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "HorseRidingSchool",
+    "name": "Manege Duikse Hoef",
+    "image": "https://manegeduiksehoef.nl/logo.png",
+    "url": "https://manegeduiksehoef.nl",
+    "telephone": "+31620685310",
+    "email": "info@manegeduiksehoef.nl",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Duiksehoef 6",
+      "addressLocality": "Loon op Zand",
+      "postalCode": "5175 PG",
+      "addressCountry": "NL"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": "51.6275",
+      "longitude": "5.0750"
+    },
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "08:00",
+        "closes": "18:00"
+      }
+    ],
+    "priceRange": "€",
+    "currenciesAccepted": "EUR",
+    "paymentAccepted": "Cash, Bank Transfer",
+    "areaServed": {
+      "@type": "City",
+      "name": "Loon op Zand"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Manege Diensten",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Paardrijlessen"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Buitenritten"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "Pensionstalling"
+          }
+        }
+      ]
+    },
+    "sameAs": [
+      "https://www.facebook.com/p/Stal-Manege-Duikse-Hoef-100092264474224/",
+      "https://www.instagram.com/manegeduiksehoef/",
+      "https://www.tiktok.com/@manege.duiksehoef"
+    ]
+  }
+
   return (
     <html lang="nl">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        />
+      </head>
       <body className={inter.className}>
         <div className="min-h-screen relative">
           <BackgroundEffects />
@@ -72,6 +155,24 @@ export default function RootLayout({
           <PerformanceMonitor />
           <VacationNotice />
         </div>
+        
+        {/* Google Analytics */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
       </body>
     </html>
   )
