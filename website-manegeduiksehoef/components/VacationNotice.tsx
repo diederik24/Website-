@@ -9,6 +9,17 @@ export default function VacationNotice() {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
+    // Check if current date is within the vacation period (9-24 January)
+    const now = new Date()
+    const currentYear = now.getFullYear()
+    const startDate = new Date(currentYear, 0, 9) // 9 January
+    const endDate = new Date(currentYear, 0, 24, 23, 59, 59) // 24 January end of day
+
+    // If current date is before 9 January or after 24 January, don't show popup
+    if (now < startDate || now > endDate) {
+      return
+    }
+
     // Check if user has already dismissed the notice
     const dismissed = localStorage.getItem('vacation-notice-dismissed')
     if (!dismissed) {
@@ -64,7 +75,7 @@ export default function VacationNotice() {
                     Wij zijn telefonisch niet bereikbaar tussen
                   </p>
                   <p className="text-3xl md:text-4xl font-bold text-pink-600 mb-8">
-                    10 - 24 Januari
+                    9 - 24 Januari
                   </p>
                 </div>
                 

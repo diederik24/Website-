@@ -37,6 +37,10 @@ export default function Home() {
     <>
       {/* Enhanced Hero Section with Modern Design */}
       <section className="hero-banner relative flex min-h-[70vh] items-center justify-center overflow-hidden">
+        {/* Pink Gradient Overlay */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-br from-pink-500/40 via-rose-500/50 to-pink-600/40"></div>
+        <div className="absolute inset-0 z-15 bg-gradient-to-t from-pink-900/20 via-transparent to-transparent"></div>
+        
         {/* Logo Overlay */}
         <div className="absolute inset-0 z-20 flex items-center justify-center">
           <motion.div
