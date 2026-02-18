@@ -111,7 +111,7 @@ export default function ContactPage() {
     }
   }
 
-  const handleInvalid = (e: React.InvalidEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputInvalid = (e: React.InvalidEvent<HTMLInputElement>) => {
     e.preventDefault()
     const field = e.target
     
@@ -122,13 +122,41 @@ export default function ContactPage() {
         field.setCustomValidity('Vul een telefoonnummer in')
       } else if (field.id === 'onderwerp') {
         field.setCustomValidity('Selecteer een onderwerp')
-      } else if (field.id === 'bericht') {
+      } else {
+        field.setCustomValidity('Dit veld is verplicht')
+      }
+    } else if (field.type === 'tel' && field.validity.patternMismatch) {
+      field.setCustomValidity('Voer een geldig telefoonnummer in')
+    } else {
+      field.setCustomValidity('')
+    }
+  }
+
+  const handleSelectInvalid = (e: React.InvalidEvent<HTMLSelectElement>) => {
+    e.preventDefault()
+    const field = e.target
+    
+    if (field.validity.valueMissing) {
+      if (field.id === 'onderwerp') {
+        field.setCustomValidity('Selecteer een onderwerp')
+      } else {
+        field.setCustomValidity('Dit veld is verplicht')
+      }
+    } else {
+      field.setCustomValidity('')
+    }
+  }
+
+  const handleTextareaInvalid = (e: React.InvalidEvent<HTMLTextAreaElement>) => {
+    e.preventDefault()
+    const field = e.target
+    
+    if (field.validity.valueMissing) {
+      if (field.id === 'bericht') {
         field.setCustomValidity('Vul uw bericht in')
       } else {
         field.setCustomValidity('Dit veld is verplicht')
       }
-    } else if (field instanceof HTMLInputElement && field.type === 'tel' && field.validity.patternMismatch) {
-      field.setCustomValidity('Voer een geldig telefoonnummer in')
     } else {
       field.setCustomValidity('')
     }
@@ -332,7 +360,7 @@ export default function ContactPage() {
                       name="naam"
                       value={formData.naam}
                       onChange={handleFieldInput}
-                      onInvalid={handleInvalid}
+                      onInvalid={handleInputInvalid}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300"
                       placeholder="Uw volledige naam"
@@ -371,7 +399,7 @@ export default function ContactPage() {
                       name="telefoon"
                       value={formData.telefoon}
                       onChange={handleFieldInput}
-                      onInvalid={handleInvalid}
+                      onInvalid={handleInputInvalid}
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300"
                       placeholder="+31 6 12345678"
                       title="Voer een geldig telefoonnummer in (bijvoorbeeld: +31 6 12345678)"
@@ -387,7 +415,7 @@ export default function ContactPage() {
                       name="onderwerp"
                       value={formData.onderwerp}
                       onChange={handleFieldInput}
-                      onInvalid={handleInvalid}
+                      onInvalid={handleSelectInvalid}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300"
                       title="Selecteer een onderwerp"
@@ -412,7 +440,7 @@ export default function ContactPage() {
                     name="bericht"
                     value={formData.bericht}
                     onChange={handleFieldInput}
-                    onInvalid={handleInvalid}
+                    onInvalid={handleTextareaInvalid}
                     required
                     rows={6}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300 resize-none"
