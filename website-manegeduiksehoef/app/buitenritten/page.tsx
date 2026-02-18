@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { Clock, Users, Shield, Star, Calendar, MapPin, CheckCircle, AlertTriangle, Coffee, Utensils, ChevronLeft, ChevronRight, X, Timer, Snowflake } from 'lucide-react'
+import { Clock, Users, Shield, Star, Calendar, MapPin, CheckCircle, AlertTriangle, Coffee, Utensils, ChevronLeft, ChevronRight, X, Timer, Snowflake, Loader2 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
 export default function BuitenrittenPage() {
@@ -23,6 +23,7 @@ export default function BuitenrittenPage() {
     notes: ''
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const isDateWithinWinterStop = (date: Date) => {
     const year = date.getFullYear()
@@ -129,6 +130,8 @@ export default function BuitenrittenPage() {
   const handleBookingSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
+    setIsLoading(true)
+    
     try {
       const response = await fetch('/api/buitenrit-signup', {
         method: 'POST',
@@ -144,6 +147,7 @@ export default function BuitenrittenPage() {
         throw new Error(data.error || 'Er is een fout opgetreden')
       }
       
+      setIsLoading(false)
       setIsSubmitted(true)
       
       // Reset formulier na 5 seconden
@@ -163,6 +167,7 @@ export default function BuitenrittenPage() {
       }, 5000)
       
     } catch (error) {
+      setIsLoading(false)
       console.error('Form submission error:', error)
       alert(error instanceof Error ? error.message : 'Er is een onverwachte fout opgetreden')
     }
@@ -173,6 +178,93 @@ export default function BuitenrittenPage() {
       ...bookingData,
       [e.target.name]: e.target.value
     })
+  }
+
+  const validateEmail = (email: string): string => {
+    if (!email) {
+      return 'Vul een e-mailadres in'
+    }
+    
+    // Controleer of er een @ in zit
+    if (!email.includes('@')) {
+      return 'E-mailadres moet een @ bevatten (bijvoorbeeld: naam@email.nl)'
+    }
+    
+    // Splits op @ en controleer beide delen
+    const parts = email.split('@')
+    if (parts.length !== 2) {
+      return 'E-mailadres moet precies één @ bevatten'
+    }
+    
+    const [localPart, domain] = parts
+    
+    // Controleer lokaal deel (voor @)
+    if (!localPart || localPart.length === 0) {
+      return 'E-mailadres moet tekst voor de @ bevatten (bijvoorbeeld: naam@email.nl)'
+    }
+    
+    // Controleer domein (na @)
+    if (!domain || domain.length === 0) {
+      return 'E-mailadres moet een domein bevatten na de @ (bijvoorbeeld: naam@email.nl)'
+    }
+    
+    // Controleer of domein een punt bevat (voor extensie zoals .nl, .com)
+    if (!domain.includes('.')) {
+      return 'Domein moet een punt bevatten (bijvoorbeeld: naam@email.nl)'
+    }
+    
+    // Controleer of er tekst is voor en na de punt in het domein
+    const domainParts = domain.split('.')
+    if (domainParts.length < 2 || !domainParts[domainParts.length - 1] || domainParts[domainParts.length - 1].length === 0) {
+      return 'Domein moet een extensie hebben (bijvoorbeeld: .nl, .com)'
+    }
+    
+    // Controleer of extensie minimaal 2 karakters heeft
+    const extension = domainParts[domainParts.length - 1]
+    if (extension.length < 2) {
+      return 'Domein extensie moet minimaal 2 karakters hebben (bijvoorbeeld: .nl, .com)'
+    }
+    
+    return ''
+  }
+
+  const handleEmailInvalid = (e: React.InvalidEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const emailInput = e.target
+    const errorMessage = validateEmail(emailInput.value)
+    emailInput.setCustomValidity(errorMessage || 'Voer een geldig e-mailadres in (bijvoorbeeld: naam@email.nl)')
+  }
+
+  const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const emailInput = e.target
+    const errorMessage = validateEmail(emailInput.value)
+    emailInput.setCustomValidity(errorMessage)
+    handleInputChange(e)
+  }
+
+  const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const emailInput = e.target
+    const value = emailInput.value.trim()
+    
+    // Als er iets is ingevuld (zelfs als het maar 1 karakter is)
+    if (value !== '') {
+      const errorMessage = validateEmail(value)
+      emailInput.setCustomValidity(errorMessage)
+      
+      // Trigger validatie check om de melding direct te tonen als er een fout is
+      if (errorMessage) {
+        // Gebruik setTimeout om ervoor te zorgen dat de blur event eerst wordt afgehandeld
+        setTimeout(() => {
+          emailInput.reportValidity()
+        }, 0)
+      } else {
+        // Reset de custom validity als het emailadres geldig is
+        emailInput.setCustomValidity('')
+      }
+    } else {
+      // Als het veld leeg is, reset de custom validity
+      emailInput.setCustomValidity('')
+    }
   }
 
   // Afteltimer voor volgende buitenrit
@@ -1029,13 +1121,23 @@ export default function BuitenrittenPage() {
             onClick={() => setShowBookingModal(false)}
           >
             <motion.div
-              className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white rounded-2xl shadow-2xl max-w-6xl w-full max-h-[85vh] overflow-y-auto"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              {isSubmitted ? (
+              {isLoading ? (
+                <div className="p-12 text-center">
+                  <Loader2 className="w-20 h-20 text-pink-500 mx-auto mb-6 animate-spin" />
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                    Aanmelding versturen...
+                  </h2>
+                  <p className="text-gray-600">
+                    Even geduld, we verwerken je aanmelding en sturen je een bevestigingsemail.
+                  </p>
+                </div>
+              ) : isSubmitted ? (
                 <div className="p-8 text-center">
                   <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-6" />
                   <h2 className="text-3xl font-bold text-gray-900 mb-4">
@@ -1055,13 +1157,13 @@ export default function BuitenrittenPage() {
               ) : (
                 <>
                   {/* Header */}
-                  <div className="bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-t-2xl">
+                  <div className="bg-gradient-to-r from-pink-500 to-pink-600 text-white p-3 rounded-t-2xl">
                     <div className="flex items-center justify-between">
                       <div>
-                        <h2 className="text-2xl font-bold">
+                        <h2 className="text-xl font-bold">
                           {selectedDate.type === 'arrangement' ? 'Arrangement' : 'Buitenrit'} Aanmelding
                         </h2>
-                        <div className="flex items-center gap-4 text-green-100 mt-2">
+                        <div className="flex items-center gap-3 text-pink-100 mt-1">
                           <Calendar className="w-5 h-5" />
                           <span className="font-semibold">{selectedDate.day} {months[selectedDate.month]} {selectedDate.year}</span>
                           <span>•</span>
@@ -1072,7 +1174,7 @@ export default function BuitenrittenPage() {
                       </div>
                       <button
                         onClick={() => setShowBookingModal(false)}
-                        className="text-green-100 hover:text-white transition-colors"
+                        className="text-pink-100 hover:text-white transition-colors"
                       >
                         <X className="w-6 h-6" />
                       </button>
@@ -1080,14 +1182,14 @@ export default function BuitenrittenPage() {
                   </div>
 
                   {/* Form Content */}
-                  <div className="p-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="p-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                       {/* Form */}
                       <div className="lg:col-span-2">
-                        <form onSubmit={handleBookingSubmit} className="space-y-4">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <form onSubmit={handleBookingSubmit} className="space-y-3">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             <div>
-                              <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
+                              <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1">
                                 Volledige Naam *
                               </label>
                               <input
@@ -1097,13 +1199,13 @@ export default function BuitenrittenPage() {
                                 value={bookingData.name}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
                                 placeholder="Je volledige naam"
                               />
                             </div>
 
                             <div>
-                              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1">
                                 E-mailadres *
                               </label>
                               <input
@@ -1111,15 +1213,18 @@ export default function BuitenrittenPage() {
                                 id="email"
                                 name="email"
                                 value={bookingData.email}
-                                onChange={handleInputChange}
+                                onChange={handleEmailInput}
+                                onInvalid={handleEmailInvalid}
+                                onBlur={handleEmailBlur}
                                 required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300"
                                 placeholder="je@email.nl"
+                                title="Voer een geldig e-mailadres in (bijvoorbeeld: naam@email.nl)"
                               />
                             </div>
 
                             <div>
-                              <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                              <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-1">
                                 Telefoonnummer *
                               </label>
                               <input
@@ -1129,13 +1234,13 @@ export default function BuitenrittenPage() {
                                 value={bookingData.phone}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
                                 placeholder="06-12345678"
                               />
                             </div>
 
                             <div>
-                              <label htmlFor="experience" className="block text-sm font-semibold text-gray-700 mb-2">
+                              <label htmlFor="experience" className="block text-sm font-semibold text-gray-700 mb-1">
                                 Ervaring *
                               </label>
                               <select
@@ -1144,7 +1249,7 @@ export default function BuitenrittenPage() {
                                 value={bookingData.experience}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
+                                className="w-full px-4 py-2.5 bg-white border-2 border-gray-300 rounded-lg shadow-sm hover:border-pink-400 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-300 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E')] bg-[length:1.5em_1.5em] bg-[right_0.75rem_center] bg-no-repeat text-gray-700 font-medium"
                               >
                                 <option value="">Selecteer je ervaring</option>
                                 <option value="minimal">Minimale ervaring (basis rijvaardigheid)</option>
@@ -1154,7 +1259,7 @@ export default function BuitenrittenPage() {
                             </div>
 
                             <div>
-                              <label htmlFor="persons" className="block text-sm font-semibold text-gray-700 mb-2">
+                              <label htmlFor="persons" className="block text-sm font-semibold text-gray-700 mb-1">
                                 Aantal personen *
                               </label>
                               <select
@@ -1163,7 +1268,7 @@ export default function BuitenrittenPage() {
                                 value={bookingData.persons}
                                 onChange={handleInputChange}
                                 required
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
+                                className="w-full px-4 py-2.5 bg-white border-2 border-gray-300 rounded-lg shadow-sm hover:border-pink-400 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-300 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E')] bg-[length:1.5em_1.5em] bg-[right_0.75rem_center] bg-no-repeat text-gray-700 font-medium"
                               >
                                 <option value="">Selecteer aantal personen</option>
                                 <option value="1">1 persoon</option>
@@ -1178,8 +1283,8 @@ export default function BuitenrittenPage() {
                             </div>
                           </div>
 
-                          {/* Arrangement Checkbox */}
-                          <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                          {/* Arrangement Checkbox - Tijdelijk verwijderd */}
+                          {/* <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
                             <div className="flex items-start gap-3">
                               <input
                                 type="checkbox"
@@ -1198,7 +1303,7 @@ export default function BuitenrittenPage() {
                                 </p>
                               </div>
                             </div>
-                          </div>
+                          </div> */}
 
                           <div>
                             <label htmlFor="experienceDetails" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -1209,14 +1314,14 @@ export default function BuitenrittenPage() {
                               name="experienceDetails"
                               value={bookingData.experienceDetails || ''}
                               onChange={handleInputChange}
-                              rows={3}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
+                              rows={2}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
                               placeholder="Vertel ons over je rijervaring, welke paarden je hebt gereden, hoe lang je al rijdt, etc. Dit helpt ons om de beste paard voor je te kiezen."
                             />
                           </div>
 
                           <div>
-                            <label htmlFor="notes" className="block text-sm font-semibold text-gray-700 mb-2">
+                            <label htmlFor="notes" className="block text-sm font-semibold text-gray-700 mb-1">
                               Opmerkingen
                             </label>
                             <textarea
@@ -1224,31 +1329,43 @@ export default function BuitenrittenPage() {
                               name="notes"
                               value={bookingData.notes}
                               onChange={handleInputChange}
-                              rows={3}
-                              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
+                              rows={2}
+                              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
                               placeholder="Heb je speciale wensen, allergieën of andere opmerkingen?"
                             />
                           </div>
 
                           <button
                             type="submit"
-                            className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-semibold text-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 flex items-center justify-center gap-2"
+                            disabled={isLoading}
+                            className={`w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white py-3 rounded-xl font-semibold text-base hover:from-pink-600 hover:to-pink-700 transition-all duration-300 flex items-center justify-center gap-2 ${
+                              isLoading ? 'opacity-70 cursor-not-allowed' : ''
+                            }`}
                           >
-                            <CheckCircle className="w-6 h-6" />
-                            Meld Je Aan
+                            {isLoading ? (
+                              <>
+                                <Loader2 className="w-6 h-6 animate-spin" />
+                                Aanmelding versturen...
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircle className="w-6 h-6" />
+                                Meld Je Aan
+                              </>
+                            )}
                           </button>
                         </form>
                       </div>
 
                       {/* Info Box */}
-                      <div className="bg-gray-50 rounded-lg p-4">
-                        <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                      <div className="bg-gray-50 rounded-lg p-3">
+                        <h3 className="text-base font-bold text-gray-900 mb-3 flex items-center gap-2">
                           <Calendar className="w-5 h-5 text-pink-600" />
                           Rit Informatie
                         </h3>
                         
-                        <div className="space-y-3">
-                          <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 p-2 bg-white rounded-lg">
                             <Clock className="w-5 h-5 text-blue-600" />
                             <div>
                               <div className="font-semibold text-gray-900">

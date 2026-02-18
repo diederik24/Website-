@@ -11,12 +11,14 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhY
 
 ## 📧 Email Services
 ```
+# Strato SMTP (primary)
+STRATO_USER=info@manegeduiksehoef.nl
+STRATO_PASSWORD=jouw-strato-wachtwoord
+STRATO_FROM_EMAIL=info@manegeduiksehoef.nl
+
 # Resend (backup)
 RESEND_API_KEY=re_A66ZAyq1_DX87bBH61ouhMN9Xft7TdpNs
 
-# Gmail (primary)
-GMAIL_USER=manegeduiksehoef.webshop@gmail.com
-GMAIL_APP_PASSWORD=nwit wqfy bnyt opgs
 ADMIN_EMAIL=shop@manegeduiksehoef.nl
 ```
 

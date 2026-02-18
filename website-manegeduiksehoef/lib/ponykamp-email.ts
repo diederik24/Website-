@@ -14,19 +14,41 @@ export interface PonykampSignupData {
 }
 
 export async function sendPonykampSignupEmail(formData: PonykampSignupData) {
-  // Gmail transporter configuratie
+  // Strato SMTP transporter configuratie
+  const stratoUser = process.env.STRATO_USER
+  const stratoPassword = process.env.STRATO_PASSWORD
+  const stratoFromEmail = process.env.STRATO_FROM_EMAIL || stratoUser
+
+  if (!stratoUser || !stratoPassword) {
+    throw new Error('SMTP configuratie niet gevonden. Zorg dat STRATO_USER en STRATO_PASSWORD zijn ingesteld in environment variables.')
+  }
+
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.strato.com',
+    port: 587,
+    secure: false, // true voor 465, false voor andere poorten
     auth: {
-      user: process.env.GMAIL_USER, // contact.manegeduiksehoef@gmail.com
-      pass: process.env.GMAIL_APP_PASSWORD // App-specifiek wachtwoord
-    }
+      user: stratoUser,
+      pass: stratoPassword,
+    },
+    tls: {
+      // Voorkomt problemen met zelfondertekende certificaten
+      rejectUnauthorized: false,
+    },
+    connectionTimeout: 10000, // 10 seconden timeout voor verbinding
+    greetingTimeout: 10000, // 10 seconden timeout voor greeting
+    socketTimeout: 10000, // 10 seconden socket timeout
   })
 
   // E-mail template
   const mailOptions = {
-    from: process.env.GMAIL_USER,
-    to: process.env.GMAIL_USER, // Stuur naar zichzelf
+    from: `"Manege Duikse Hoef" <${stratoFromEmail}>`,
+    to: 'diederik24@icloud.com', // TEST: Stuur naar test email
+    headers: {
+      'List-Unsubscribe': `<mailto:${stratoFromEmail}?subject=unsubscribe>`,
+      'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+      'X-Mailer': 'Manege Duikse Hoef System',
+    },
     replyTo: formData.parentEmail, // Laat antwoorden naar de ouder gaan
     subject: `Ponykamp Aanmelding: ${formData.childName} - ${formData.parentName}`,
     html: `
@@ -161,9 +183,15 @@ Via: manegeduiksehoef.nl
 
   try {
     const result = await transporter.sendMail(mailOptions)
+    console.log(`Email sent successfully: ${result.messageId}`)
+    
+    // Sluit transporter af
+    transporter.close()
+    
     return { success: true, messageId: result.messageId }
   } catch (error) {
     console.error('Email sending failed:', error)
+    transporter.close()
     throw new Error('Er is een fout opgetreden bij het verzenden van de aanmelding. Probeer het later opnieuw.')
   }
 }

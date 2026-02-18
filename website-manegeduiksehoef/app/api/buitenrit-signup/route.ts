@@ -62,11 +62,28 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Buitenrit signup error:', error)
     
+    // Meer gedetailleerde error logging
+    if (error instanceof Error) {
+      console.error('Error message:', error.message)
+      console.error('Error stack:', error.stack)
+    }
+    
+    // Check of het een SMTP configuratie probleem is
+    const errorMessage = error instanceof Error ? error.message : 'Er is een onverwachte fout opgetreden.'
+    
+    // Geef meer informatieve error terug
+    let userFriendlyError = 'Er is een fout opgetreden bij het verzenden van de aanmelding.'
+    
+    if (errorMessage.includes('SMTP configuratie')) {
+      userFriendlyError = 'Email configuratie probleem. Neem contact op met de beheerder.'
+    } else if (errorMessage.includes('timeout') || errorMessage.includes('connection')) {
+      userFriendlyError = 'Verbindingsprobleem met de email server. Probeer het later opnieuw.'
+    }
+    
     return NextResponse.json(
       { 
-        error: error instanceof Error 
-          ? error.message 
-          : 'Er is een onverwachte fout opgetreden. Probeer het later opnieuw.' 
+        error: userFriendlyError,
+        details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
       },
       { status: 500 }
     )

@@ -24,6 +24,123 @@ export default function ContactPage() {
     }))
   }
 
+  const validateEmail = (email: string): string => {
+    if (!email) {
+      return 'Vul een e-mailadres in'
+    }
+    
+    // Controleer of er een @ in zit
+    if (!email.includes('@')) {
+      return 'E-mailadres moet een @ bevatten (bijvoorbeeld: naam@email.nl)'
+    }
+    
+    // Splits op @ en controleer beide delen
+    const parts = email.split('@')
+    if (parts.length !== 2) {
+      return 'E-mailadres moet precies één @ bevatten'
+    }
+    
+    const [localPart, domain] = parts
+    
+    // Controleer lokaal deel (voor @)
+    if (!localPart || localPart.length === 0) {
+      return 'E-mailadres moet tekst voor de @ bevatten (bijvoorbeeld: naam@email.nl)'
+    }
+    
+    // Controleer domein (na @)
+    if (!domain || domain.length === 0) {
+      return 'E-mailadres moet een domein bevatten na de @ (bijvoorbeeld: naam@email.nl)'
+    }
+    
+    // Controleer of domein een punt bevat (voor extensie zoals .nl, .com)
+    if (!domain.includes('.')) {
+      return 'Domein moet een punt bevatten (bijvoorbeeld: naam@email.nl)'
+    }
+    
+    // Controleer of er tekst is voor en na de punt in het domein
+    const domainParts = domain.split('.')
+    if (domainParts.length < 2 || !domainParts[domainParts.length - 1] || domainParts[domainParts.length - 1].length === 0) {
+      return 'Domein moet een extensie hebben (bijvoorbeeld: .nl, .com)'
+    }
+    
+    // Controleer of extensie minimaal 2 karakters heeft
+    const extension = domainParts[domainParts.length - 1]
+    if (extension.length < 2) {
+      return 'Domein extensie moet minimaal 2 karakters hebben (bijvoorbeeld: .nl, .com)'
+    }
+    
+    return ''
+  }
+
+  const handleEmailInvalid = (e: React.InvalidEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    const emailInput = e.target
+    const errorMessage = validateEmail(emailInput.value)
+    emailInput.setCustomValidity(errorMessage || 'Voer een geldig e-mailadres in (bijvoorbeeld: naam@email.nl)')
+  }
+
+  const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const emailInput = e.target
+    const errorMessage = validateEmail(emailInput.value)
+    emailInput.setCustomValidity(errorMessage)
+    handleInputChange(e)
+  }
+
+  const handleEmailBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const emailInput = e.target
+    const value = emailInput.value.trim()
+    
+    // Als er iets is ingevuld (zelfs als het maar 1 karakter is)
+    if (value !== '') {
+      const errorMessage = validateEmail(value)
+      emailInput.setCustomValidity(errorMessage)
+      
+      // Trigger validatie check om de melding direct te tonen als er een fout is
+      if (errorMessage) {
+        // Gebruik setTimeout om ervoor te zorgen dat de blur event eerst wordt afgehandeld
+        setTimeout(() => {
+          emailInput.reportValidity()
+        }, 0)
+      } else {
+        // Reset de custom validity als het emailadres geldig is
+        emailInput.setCustomValidity('')
+      }
+    } else {
+      // Als het veld leeg is, reset de custom validity
+      emailInput.setCustomValidity('')
+    }
+  }
+
+  const handleInvalid = (e: React.InvalidEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    e.preventDefault()
+    const field = e.target
+    
+    if (field.validity.valueMissing) {
+      if (field.id === 'naam') {
+        field.setCustomValidity('Vul uw naam in')
+      } else if (field.id === 'telefoon') {
+        field.setCustomValidity('Vul een telefoonnummer in')
+      } else if (field.id === 'onderwerp') {
+        field.setCustomValidity('Selecteer een onderwerp')
+      } else if (field.id === 'bericht') {
+        field.setCustomValidity('Vul uw bericht in')
+      } else {
+        field.setCustomValidity('Dit veld is verplicht')
+      }
+    } else if (field instanceof HTMLInputElement && field.type === 'tel' && field.validity.patternMismatch) {
+      field.setCustomValidity('Voer een geldig telefoonnummer in')
+    } else {
+      field.setCustomValidity('')
+    }
+  }
+
+  const handleFieldInput = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    if (e.target.id !== 'email') {
+      e.target.setCustomValidity('')
+    }
+    handleInputChange(e)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
@@ -214,10 +331,12 @@ export default function ContactPage() {
                       id="naam"
                       name="naam"
                       value={formData.naam}
-                      onChange={handleInputChange}
+                      onChange={handleFieldInput}
+                      onInvalid={handleInvalid}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300"
                       placeholder="Uw volledige naam"
+                      title="Vul uw volledige naam in"
                     />
                   </div>
                   
@@ -230,10 +349,13 @@ export default function ContactPage() {
                       id="email"
                       name="email"
                       value={formData.email}
-                      onChange={handleInputChange}
+                      onChange={handleEmailInput}
+                      onBlur={handleEmailBlur}
+                      onInvalid={handleEmailInvalid}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300"
                       placeholder="uw.email@voorbeeld.nl"
+                      title="Voer een geldig e-mailadres in met @ en domein (bijvoorbeeld: naam@email.nl)"
                     />
                   </div>
                 </div>
@@ -248,9 +370,11 @@ export default function ContactPage() {
                       id="telefoon"
                       name="telefoon"
                       value={formData.telefoon}
-                      onChange={handleInputChange}
+                      onChange={handleFieldInput}
+                      onInvalid={handleInvalid}
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300"
                       placeholder="+31 6 12345678"
+                      title="Voer een geldig telefoonnummer in (bijvoorbeeld: +31 6 12345678)"
                     />
                   </div>
                   
@@ -262,9 +386,11 @@ export default function ContactPage() {
                       id="onderwerp"
                       name="onderwerp"
                       value={formData.onderwerp}
-                      onChange={handleInputChange}
+                      onChange={handleFieldInput}
+                      onInvalid={handleInvalid}
                       required
                       className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300"
+                      title="Selecteer een onderwerp"
                     >
                       <option value="">Selecteer een onderwerp</option>
                       <option value="lessen">Lessen</option>
@@ -285,11 +411,13 @@ export default function ContactPage() {
                     id="bericht"
                     name="bericht"
                     value={formData.bericht}
-                    onChange={handleInputChange}
+                    onChange={handleFieldInput}
+                    onInvalid={handleInvalid}
                     required
                     rows={6}
                     className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-transparent transition-all duration-300 resize-none"
                     placeholder="Vertel ons waar we u mee kunnen helpen..."
+                    title="Vul uw bericht in"
                   />
                 </div>
 

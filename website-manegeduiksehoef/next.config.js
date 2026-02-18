@@ -15,9 +15,6 @@ const nextConfig = {
   experimental: {
     forceSwcTransforms: false,
   },
-  turbopack: {
-    root: __dirname,
-  },
   // Production optimizations
   compress: true,
   poweredByHeader: false,
