@@ -4,12 +4,14 @@ import { motion } from 'framer-motion'
 import { CheckCircle, Star, Gift, Calendar, Users, Sparkles, Crown, Zap, Heart } from 'lucide-react'
 
 interface LessonCardProps {
-  lessons: number
+  lessons?: number
   price: number
   originalPrice?: number
   discount?: number
   isPopular?: boolean
   features?: string[]
+  title?: string
+  subtitle?: string
 }
 
 export default function LessonCard({ 
@@ -24,7 +26,9 @@ export default function LessonCard({
     "Professionele instructie",
     "Geschikt voor alle niveaus",
     "Flexibele planning"
-  ]
+  ],
+  title = "Leskaart",
+  subtitle
 }: LessonCardProps) {
   return (
     <motion.div
@@ -94,7 +98,7 @@ export default function LessonCard({
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
               >
-                Leskaart
+                {title}
               </motion.h3>
               
               <motion.div
@@ -114,7 +118,11 @@ export default function LessonCard({
                   >
                     €{price}
                   </motion.span>
-                  <span className="text-lg text-gray-500 font-medium">/10xlessen</span>
+                  {subtitle ? (
+                    <span className="text-lg text-gray-500 font-medium">{subtitle}</span>
+                  ) : (
+                    <span className="text-lg text-gray-500 font-medium">/10xlessen</span>
+                  )}
                 </div>
                 {discount && (
                   <motion.span 

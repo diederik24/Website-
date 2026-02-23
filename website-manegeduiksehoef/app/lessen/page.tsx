@@ -179,22 +179,44 @@ export default function LessenPage() {
             </div>
 
             <div className="w-full max-w-7xl mx-auto">
-              {/* Ritten kaart */}
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="w-full mb-12"
-              >
-                <LessonCard
-                  lessons={10}
-                  price={185}
-                  features={[
-                    "10 ritten kaart",
-                    "60 minuten per les"
-                  ]}
-                />
-              </motion.div>
+              {/* Periodekaarten */}
+              <div className="space-y-8 mb-12">
+                {/* Jeugd Periodekaart */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="w-full"
+                >
+                  <LessonCard
+                    price={275}
+                    title="Periodekaart Jeugd"
+                    subtitle="/13 weken"
+                    features={[
+                      "13 weken",
+                      "60 minuten per les"
+                    ]}
+                  />
+                </motion.div>
+
+                {/* Volwassen Periodekaart */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.1 }}
+                  className="w-full"
+                >
+                  <LessonCard
+                    price={325}
+                    title="Periodekaart Volwassen"
+                    subtitle="/13 weken"
+                    features={[
+                      "13 weken",
+                      "60 minuten per les"
+                    ]}
+                  />
+                </motion.div>
+              </div>
 
               {/* Privé les en Losse les opties */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
