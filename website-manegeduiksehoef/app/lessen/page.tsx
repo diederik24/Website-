@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Users, Calendar, Star, Heart, Shield, Clock, Trophy, Award, Phone, Mail } from 'lucide-react'
+import { Users, Calendar, Star, Heart, Shield, Clock, Trophy, Award, Phone, Mail, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import LessonCard from '@/components/LessonCard'
@@ -43,6 +43,70 @@ export default function LessenPage() {
             <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
               Professionele paardrijlessen voor alle leeftijden en niveaus
             </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Belangrijke Mededeling */}
+      <section className="py-12 bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 relative overflow-hidden">
+        {/* Decoratieve achtergrond elementen */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 left-0 w-64 h-64 bg-pink-400 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 right-0 w-64 h-64 bg-rose-400 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="max-w-6xl mx-auto px-6 relative z-10">
+          <motion.div
+            className="bg-gradient-to-br from-white to-pink-50 rounded-2xl shadow-2xl p-8 border-2 border-pink-200 relative overflow-hidden"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            {/* Decoratieve accent lijn */}
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500"></div>
+            
+            <div className="flex flex-col md:flex-row items-start gap-6">
+              {/* Icon container */}
+              <motion.div
+                className="flex-shrink-0"
+                initial={{ rotate: -10 }}
+                animate={{ rotate: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <AlertCircle className="w-9 h-9 text-white" />
+                </div>
+              </motion.div>
+              
+              {/* Content */}
+              <div className="flex-1">
+                <motion.h3
+                  className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 flex items-center gap-2"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                  <span className="bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
+                    Belangrijke Mededeling
+                  </span>
+                </motion.h3>
+                <motion.p
+                  className="text-gray-700 text-lg md:text-xl leading-relaxed"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                  Wij nemen momenteel{' '}
+                  <span className="font-bold text-pink-700 bg-pink-100 px-2 py-1 rounded-md">
+                    geen nieuwe beginnende les klanten
+                  </span>{' '}
+                  meer aan. Alle beginners lessen zitten vol.
+                </motion.p>
+              </div>
+            </div>
+            
+            {/* Decoratieve bottom accent */}
+            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent"></div>
           </motion.div>
         </div>
       </section>
