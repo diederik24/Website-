@@ -7,8 +7,6 @@ import Navbar from '@/components/Navbar'
 import BackToTop from '@/components/BackToTop'
 import BackgroundEffects from '@/components/BackgroundEffects'
 import PerformanceMonitor from '@/components/PerformanceMonitor'
-import VacationNotice from '@/components/VacationNotice'
-
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -153,7 +151,6 @@ export default function RootLayout({
           </main>
           <BackToTop />
           <PerformanceMonitor />
-          <VacationNotice />
         </div>
         
         {/* Google Analytics */}

@@ -2,28 +2,59 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, Mail } from 'lucide-react'
+import { X } from 'lucide-react'
 import Image from 'next/image'
+
+const MONTH_NAMES = [
+  'januari', 'februari', 'maart', 'april', 'mei', 'juni',
+  'juli', 'augustus', 'september', 'oktober', 'november', 'december',
+]
+
+/**
+ * Periode waarin de popup “telefonisch niet bereikbaar” getoond wordt.
+ * Pas start/end aan (maand = 0-indexed: januari = 0).
+ */
+const VACATION_NOTICE_PERIOD = {
+  start: { year: 2026, monthIndex: 3, day: 9 },
+  end: { year: 2026, monthIndex: 3, day: 12 },
+} as const
+
+function getNoticePeriodBounds() {
+  const { start, end } = VACATION_NOTICE_PERIOD
+  const startDate = new Date(start.year, start.monthIndex, start.day)
+  const endDate = new Date(end.year, end.monthIndex, end.day, 23, 59, 59, 999)
+  return { startDate, endDate }
+}
+
+function formatNoticePeriodLabel(): string {
+  const { start, end } = VACATION_NOTICE_PERIOD
+  const sm = MONTH_NAMES[start.monthIndex]
+  const em = MONTH_NAMES[end.monthIndex]
+  if (start.year === end.year && start.monthIndex === end.monthIndex) {
+    return `${start.day} - ${end.day} ${sm} ${start.year}`
+  }
+  return `${start.day} ${sm} ${start.year} - ${end.day} ${em} ${end.year}`
+}
+
+function dismissStorageKey() {
+  const { start } = VACATION_NOTICE_PERIOD
+  return `vacation-notice-dismissed-${start.year}-${start.monthIndex + 1}-${start.day}-${VACATION_NOTICE_PERIOD.end.day}`
+}
 
 export default function VacationNotice() {
   const [isVisible, setIsVisible] = useState(false)
+  const periodLabel = formatNoticePeriodLabel()
 
   useEffect(() => {
-    // Check if current date is within the vacation period (9-24 January)
     const now = new Date()
-    const currentYear = now.getFullYear()
-    const startDate = new Date(currentYear, 0, 9) // 9 January
-    const endDate = new Date(currentYear, 0, 24, 23, 59, 59) // 24 January end of day
+    const { startDate, endDate } = getNoticePeriodBounds()
 
-    // If current date is before 9 January or after 24 January, don't show popup
     if (now < startDate || now > endDate) {
       return
     }
 
-    // Check if user has already dismissed the notice
-    const dismissed = localStorage.getItem('vacation-notice-dismissed')
+    const dismissed = localStorage.getItem(dismissStorageKey())
     if (!dismissed) {
-      // Show popup after a short delay for better UX
       setTimeout(() => {
         setIsVisible(true)
       }, 1000)
@@ -32,8 +63,7 @@ export default function VacationNotice() {
 
   const handleClose = () => {
     setIsVisible(false)
-    // Remember that user dismissed the notice for this session
-    localStorage.setItem('vacation-notice-dismissed', 'true')
+    localStorage.setItem(dismissStorageKey(), 'true')
   }
 
   return (
@@ -75,7 +105,7 @@ export default function VacationNotice() {
                     Wij zijn telefonisch niet bereikbaar tussen
                   </p>
                   <p className="text-3xl md:text-4xl font-bold text-pink-600 mb-8">
-                    9 - 24 Januari
+                    {periodLabel}
                   </p>
                 </div>
                 

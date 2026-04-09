@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import Footer from '@/components/Footer'
+import VacationNotice from '@/components/VacationNotice'
 import GoogleReviews from '@/components/GoogleReviews'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, Phone, Mail, MapPin, Clock, Instagram, Facebook, Users, Shield, Award, Heart, Star, Sparkles, Zap, Crown, Gem, Flower2, Sun, Moon, Calendar, Camera } from 'lucide-react'
@@ -35,6 +36,7 @@ function AnimatedCounter({ end, duration = 2000 }: { end: number; duration?: num
 export default function Home() {
   return (
     <>
+      <VacationNotice />
       {/* Enhanced Hero Section with Modern Design */}
       <section className="hero-banner relative flex min-h-[70vh] items-center justify-center overflow-hidden">
         {/* Pink Gradient Overlay */}

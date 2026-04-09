@@ -5,6 +5,17 @@ import Image from 'next/image'
 import { Clock, Users, Shield, Star, Calendar, MapPin, CheckCircle, AlertTriangle, Coffee, Utensils, ChevronLeft, ChevronRight, X, Timer, Snowflake, Loader2 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
+/** Volledige datums (jaar, maand 0-indexed, dag) die niet reserveerbaar zijn voor buitenritten */
+const BLOCKED_BUITENRIT_DATES: { year: number; month: number; day: number }[] = [
+  { year: 2026, month: 3, day: 12 }, // 12 april 2026
+]
+
+function isBlockedBuitenritDate(day: number, month: number, year: number) {
+  return BLOCKED_BUITENRIT_DATES.some(
+    (b) => b.year === year && b.month === month && b.day === day
+  )
+}
+
 export default function BuitenrittenPage() {
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
@@ -102,6 +113,10 @@ export default function BuitenrittenPage() {
     }
 
     if (isWinterStopDate(day, currentMonth, currentYear)) {
+      return
+    }
+
+    if (isBlockedBuitenritDate(day, currentMonth, currentYear)) {
       return
     }
     
@@ -882,8 +897,23 @@ export default function BuitenrittenPage() {
                 const isFuture = isFutureDate(day, currentMonth, currentYear)
                 const currentDate = new Date(currentYear, currentMonth, day)
                 const isWinterStopDay = isDateWithinWinterStop(currentDate)
+                const isBlockedDay = isBlockedBuitenritDate(day, currentMonth, currentYear)
                 
                 if (isSundayDay) {
+                  if (isFuture && !isWinterStopDay && isBlockedDay) {
+                    return (
+                      <div
+                        key={day}
+                        className="h-8 bg-red-50 border-2 border-red-400 border-dashed rounded flex items-center justify-center relative text-xs cursor-not-allowed"
+                        title="Deze dag is niet beschikbaar"
+                      >
+                        <div className="font-bold text-red-600 line-through">{day}</div>
+                        {isArrangementDay && (
+                          <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-red-500 rounded-full" />
+                        )}
+                      </div>
+                    )
+                  }
                   if (isFuture && !isWinterStopDay) {
                     // Toekomstige zondag - klikbaar
                     return (
