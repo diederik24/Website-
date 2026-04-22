@@ -8,6 +8,9 @@ import { useState, useEffect } from 'react'
 /** Volledige datums (jaar, maand 0-indexed, dag) die niet reserveerbaar zijn voor buitenritten */
 const BLOCKED_BUITENRIT_DATES: { year: number; month: number; day: number }[] = [
   { year: 2026, month: 3, day: 12 }, // 12 april 2026
+  { year: 2026, month: 3, day: 26 }, // 26 april 2026
+  { year: 2026, month: 4, day: 17 }, // 17 mei 2026
+  { year: 2026, month: 4, day: 31 }, // 31 mei 2026
 ]
 
 function isBlockedBuitenritDate(day: number, month: number, year: number) {
