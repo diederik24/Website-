@@ -569,7 +569,7 @@ export default function BuitenrittenPage() {
                 </div>
                 <div className="flex items-start gap-3">
                   <Clock className="w-6 h-6 text-blue-600 mt-1 flex-shrink-0" />
-                  <p className="text-gray-700">U dient minimaal 15 minuten voor aanvang aanwezig te zijn</p>
+                  <p className="text-gray-700">U dient minimaal 30 minuten voor aanvang aanwezig te zijn</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-6 h-6 text-red-600 mt-1 flex-shrink-0" />
