@@ -453,13 +453,13 @@ export default function Home() {
               <Users className="w-10 h-10 text-pink-600" />
             </motion.div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Voor kinderen én volwassenen - persoonlijke begeleiding in een ontspannen sfeer
+              Groepslessen voor volwassenen, privé- en duo-lessen op aanvraag, en buitenritten
             </p>
           </motion.div>
 
           {/* Key Features Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {/* Lessen voor alle leeftijden */}
+            {/* Lessen & buitenritten */}
             <motion.div
               className="bg-white p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500"
               initial={{ opacity: 0, y: 50 }}
@@ -467,9 +467,12 @@ export default function Home() {
               transition={{ duration: 0.6 }}
               whileHover={{ y: -5 }}
             >
-              <div className="text-4xl mb-4">👨‍👩‍👧‍👦</div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Voor kinderen én volwassenen</h3>
-              <p className="text-gray-600 text-sm">Vanaf 7 jaar kan je bij ons leren paardrijden</p>
+              <Users className="w-10 h-10 text-pink-600 mb-4" />
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Lessen & buitenritten</h3>
+              <p className="text-gray-600 text-sm">
+                Geen groepslessen meer voor kinderen. Wel groepslessen voor volwassenen,
+                privé- en duo-lessen op aanvraag, en buitenritten.
+              </p>
             </motion.div>
 
             {/* Persoonlijke begeleiding */}
@@ -615,7 +618,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <div className="text-4xl md:text-5xl font-bold text-pink-600 mb-2">
-                <AnimatedCounter end={17} />
+                <AnimatedCounter end={12} />
               </div>
               <div className="text-gray-600 font-medium">
                 Manegepaarden
@@ -686,7 +689,7 @@ export default function Home() {
                 </motion.div>
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">Lessen</h3>
-              <p className="text-gray-600 mb-6 flex-grow">Paardrijlessen voor kinderen en volwassenen in een ontspannen sfeer</p>
+              <p className="text-gray-600 mb-6 flex-grow">Groepslessen voor volwassenen, privé- en duo-lessen op aanvraag</p>
               <Link href="/lessen" className="mt-auto">
                 <motion.button 
                   className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-6 py-3 rounded-xl font-semibold hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 shadow-lg hover:shadow-xl w-full"

@@ -1,11 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Users, Calendar, Star, Heart, Shield, Clock, Trophy, Award, Phone, Mail, AlertCircle } from 'lucide-react'
-import Link from 'next/link'
+import { Users, Star, Trophy, Award } from 'lucide-react'
 import Image from 'next/image'
-import LessonCard from '@/components/LessonCard'
-
 export default function LessenPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50">
@@ -36,77 +33,10 @@ export default function LessenPage() {
             >
               <Trophy className="w-12 h-12 text-yellow-400" />
               <h1 className="text-5xl md:text-6xl font-bold">
-                Lessen & <span className="text-yellow-400">Instructeurs</span>
+                Privé Lessen & <span className="text-yellow-400">Duo lessen</span>
               </h1>
               <Star className="w-12 h-12 text-yellow-400" />
             </motion.div>
-            <p className="text-xl md:text-2xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-              Professionele paardrijlessen voor alle leeftijden en niveaus
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Belangrijke Mededeling */}
-      <section className="py-12 bg-gradient-to-br from-pink-50 via-rose-50 to-pink-100 relative overflow-hidden">
-        {/* Decoratieve achtergrond elementen */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-64 h-64 bg-pink-400 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-64 h-64 bg-rose-400 rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="max-w-6xl mx-auto px-6 relative z-10">
-          <motion.div
-            className="bg-gradient-to-br from-white to-pink-50 rounded-2xl shadow-2xl p-8 border-2 border-pink-200 relative overflow-hidden"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            {/* Decoratieve accent lijn */}
-            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-pink-500 via-rose-500 to-pink-500"></div>
-            
-            <div className="flex flex-col md:flex-row items-start gap-6">
-              {/* Icon container */}
-              <motion.div
-                className="flex-shrink-0"
-                initial={{ rotate: -10 }}
-                animate={{ rotate: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-              >
-                <div className="w-16 h-16 bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <AlertCircle className="w-9 h-9 text-white" />
-                </div>
-              </motion.div>
-              
-              {/* Content */}
-              <div className="flex-1">
-                <motion.h3
-                  className="text-2xl md:text-3xl font-bold text-gray-900 mb-3 flex items-center gap-2"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.1 }}
-                >
-                  <span className="bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
-                    Belangrijke Mededeling
-                  </span>
-                </motion.h3>
-                <motion.p
-                  className="text-gray-700 text-lg md:text-xl leading-relaxed"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 }}
-                >
-                  Wij nemen momenteel{' '}
-                  <span className="font-bold text-pink-700 bg-pink-100 px-2 py-1 rounded-md">
-                    geen nieuwe beginnende les klanten
-                  </span>{' '}
-                  meer aan. Alle beginners lessen zitten vol.
-                </motion.p>
-              </div>
-            </div>
-            
-            {/* Decoratieve bottom accent */}
-            <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-pink-300 to-transparent"></div>
           </motion.div>
         </div>
       </section>
@@ -117,101 +47,42 @@ export default function LessenPage() {
           
           {/* Lessen Informatie */}
           <motion.div
-            className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 mb-16"
+            className="relative overflow-hidden bg-white rounded-2xl shadow-xl p-8 md:p-10 border border-gray-100 mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <Users className="w-8 h-8 text-blue-600" />
-              Onze Lessen
-            </h2>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Leeftijd & Ervaring</h3>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <Calendar className="w-6 h-6 text-green-600 mt-1 flex-shrink-0" />
-                    <p className="text-gray-700">Kinderen mogen vanaf de leeftijd van 7 jaar leren paardrijden bij Manege Duikse Hoef</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Star className="w-6 h-6 text-blue-600 mt-1 flex-shrink-0" />
-                    <p className="text-gray-700">De manege lessen zijn verdeeld in leeftijd en ervaring</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Users className="w-6 h-6 text-purple-600 mt-1 flex-shrink-0" />
-                    <p className="text-gray-700">Startende kinderen en volwassenen beginnen met enkele privé lessen totdat ze zelfstandig genoeg ruitergevoel hebben</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Trophy className="w-6 h-6 text-yellow-600 mt-1 flex-shrink-0" />
-                    <p className="text-gray-700">Daarna worden ze in de groepslessen ingedeeld</p>
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Verzorging & Meer</h3>
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <Heart className="w-6 h-6 text-pink-600 mt-1 flex-shrink-0" />
-                    <p className="text-gray-700">Het is niet alleen leren rijden, maar ook de verzorging, het poetsen, op- en afzadelen hoort erbij</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Award className="w-6 h-6 text-pink-600 mt-1 flex-shrink-0" />
-                    <p className="text-gray-700">Jaarlijks organiseren wij gezellige en leerzame pony doe dagen</p>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <Star className="w-6 h-6 text-green-600 mt-1 flex-shrink-0" />
-                    <p className="text-gray-700">Op deze dagen wordt aan de verzorging van de pony's en paarden spelenderwijs extra aandacht gegeven en gaan we spelletjes doen</p>
-                  </div>
-                </div>
+            {/* Schuin groen label */}
+            <div
+              className="pointer-events-none absolute -right-1 top-0 z-10 h-28 w-28 overflow-hidden"
+              aria-hidden="true"
+            >
+              <div className="absolute left-[-28%] top-[32%] w-[150%] rotate-45 bg-gradient-to-b from-green-500 to-green-700 py-2 text-center">
+                <span className="block text-[11px] font-bold uppercase tracking-[0.12em] text-white">
+                  Op aanvraag
+                </span>
               </div>
             </div>
-          </motion.div>
 
-          {/* Wedstrijden & Speciale Lessen */}
-          <motion.div
-            className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 mb-16"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center gap-3">
-              <Trophy className="w-8 h-8 text-yellow-600" />
-              Wedstrijden & Speciale Lessen
+            <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3 pr-24">
+              <Users className="w-8 h-8 text-pink-600" />
+              Onze Lessen
             </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6 border border-yellow-200">
-                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <Trophy className="w-6 h-6 text-yellow-600" />
-                  Onderlinge Wedstrijden
-                </h3>
-                <p className="text-gray-700">
-                  Op de manege wordt elk jaar een onderlinge wedstrijd georganiseerd voor alle ruiters.
-                </p>
-              </div>
-              
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-200">
-                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <Shield className="w-6 h-6 text-blue-600" />
-                  Dressuurlessen
-                </h3>
-                <p className="text-gray-700">
-                  Voor de pensionklanten met eigen paarden worden privé- en groepslessen dressuur gegeven door onze enthousiaste instructeurs.
-                </p>
-              </div>
-              
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200 md:col-span-2">
-                <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-                  <Star className="w-6 h-6 text-green-600" />
-                  Springlessen
-                </h3>
-                <p className="text-gray-700">
-                  Op aanvraag worden er ook regelmatig springlessen georganiseerd voor gevorderde ruiters.
-                </p>
-              </div>
+
+            <div className="max-w-3xl space-y-5">
+              <p className="text-lg text-gray-700 leading-relaxed">
+                Op dit moment bieden wij geen groepslessen meer aan voor kinderen.
+                Voor volwassenen zijn groepslessen wel beschikbaar.
+              </p>
+              <p className="text-lg text-gray-700 leading-relaxed">
+                Daarnaast kun je bij ons <span className="font-semibold text-gray-900">op aanvraag</span> terecht
+                voor persoonlijke aandacht in de vorm van privélessen en duo-lessen.
+                Ook bieden wij buitenritten aan.
+              </p>
+              <p className="text-base text-gray-600 leading-relaxed border-l-4 border-pink-300 pl-4">
+                Heb je interesse? Neem contact met ons op om een les in te plannen. Bekijk hieronder
+                de mogelijkheden en prijzen.
+              </p>
             </div>
           </motion.div>
 
@@ -229,7 +100,7 @@ export default function LessenPage() {
                 <Trophy className="w-10 h-10 text-yellow-600" />
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Kies uit onze verschillende lesmogelijkheden. Privé lessen voor persoonlijke aandacht of losse lessen voor flexibiliteit.
+                Kies uit onze privé lessen voor persoonlijke aandacht, of duo privé lessen samen met iemand anders.
               </p>
               <div className="mt-6 p-4 bg-pink-50 rounded-xl border border-pink-200">
                 <div className="flex items-center justify-center gap-2 mb-2">
@@ -243,46 +114,7 @@ export default function LessenPage() {
             </div>
 
             <div className="w-full max-w-7xl mx-auto">
-              {/* Periodekaarten */}
-              <div className="space-y-8 mb-12">
-                {/* Jeugd Periodekaart */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="w-full"
-                >
-                  <LessonCard
-                    price={275}
-                    title="Periodekaart Jeugd"
-                    subtitle="/13 weken"
-                    features={[
-                      "13 weken",
-                      "60 minuten per les"
-                    ]}
-                  />
-                </motion.div>
-
-                {/* Volwassen Periodekaart */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.1 }}
-                  className="w-full"
-                >
-                  <LessonCard
-                    price={325}
-                    title="Periodekaart Volwassen"
-                    subtitle="/13 weken"
-                    features={[
-                      "13 weken",
-                      "60 minuten per les"
-                    ]}
-                  />
-                </motion.div>
-              </div>
-
-              {/* Privé les en Losse les opties */}
+              {/* Privé les opties */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* Privé les */}
                 <motion.div
@@ -307,303 +139,14 @@ export default function LessenPage() {
                 >
                   <div className="text-center">
                     <h3 className="text-2xl font-bold text-gray-900 mb-4">Duo Privé les</h3>
-                    <div className="text-4xl font-bold text-pink-600 mb-2">€25,00 p.p.</div>
+                    <div className="text-4xl font-bold text-pink-600 mb-2">€27,50 p.p.</div>
                     <p className="text-gray-600">45 minuten · 2 personen</p>
                   </div>
                 </motion.div>
-
-                {/* Losse les */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.2 }}
-                  className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100"
-                >
-                  <div className="text-center">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Jeugd Losse les</h3>
-                    <div className="text-4xl font-bold text-pink-600 mb-4">€25,00</div>
-                    <p className="text-gray-600">60 minuten</p>
-                  </div>
-                </motion.div>
-
-                {/* Volwassenen losse les */}
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100"
-                >
-                  <div className="text-center">
-                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Volwassen Losse les</h3>
-                    <div className="text-4xl font-bold text-pink-600 mb-4">€30,00</div>
-                    <p className="text-gray-600">60 minuten</p>
-                  </div>
-                </motion.div>
               </div>
             </div>
 
           </motion.div>
-
-          {/* Week Agenda Groepslessen */}
-          <motion.div
-            className="bg-gradient-to-br from-white via-blue-50 to-purple-50 rounded-3xl shadow-2xl p-8 border border-white/20 mb-16 backdrop-blur-sm"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <motion.div
-              className="text-center mb-16"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Lestijden Groepslessen
-                <span className="text-pink-600"> Overzicht</span>
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-                Ontdek alle beschikbare lessen per dag van de week bij Manege Duikse Hoef
-              </p>
-            </motion.div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {/* Maandag */}
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-5 border-2 border-pink-200 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group">
-                <h3 className="text-lg font-bold text-pink-800 mb-4 flex items-center gap-2">
-                  <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
-                    <Calendar className="w-4 h-4 text-white" />
-                  </div>
-                  Maandag
-                </h3>
-                <div className="space-y-2">
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">13:00-15:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Privéles mogelijk</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">16:00-17:30</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Ponyclub</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Dinsdag */}
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-5 border-2 border-pink-200 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group">
-                <h3 className="text-lg font-bold text-pink-800 mb-4 flex items-center gap-2">
-                  <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
-                    <Calendar className="w-4 h-4 text-white" />
-                  </div>
-                  Dinsdag
-                </h3>
-                <div className="space-y-2">
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">19:30-20:30</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Volwassen les</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Woensdag */}
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-5 border-2 border-pink-200 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group">
-                <h3 className="text-lg font-bold text-pink-800 mb-4 flex items-center gap-2">
-                  <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
-                    <Calendar className="w-4 h-4 text-white" />
-                  </div>
-                  Woensdag
-                </h3>
-                <div className="space-y-2 max-h-80 overflow-y-auto">
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">13:30-14:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Privéles</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">14:00-15:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Beginnersles jeugd</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">15:00-16:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Gemiddelde jeugd</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">16:00-16:30</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Privéles</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">16:30-17:30</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Gemiddeld-gevorderde jeugd</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">19:00-20:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Gemiddeld-gevorderde volwassenen</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">20:00-21:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Pensionles</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Donderdag */}
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-5 border-2 border-pink-200 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group">
-                <h3 className="text-lg font-bold text-pink-800 mb-4 flex items-center gap-2">
-                  <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
-                    <Calendar className="w-4 h-4 text-white" />
-                  </div>
-                  Donderdag
-                </h3>
-                <div className="space-y-2">
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">13:00-15:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Privéles mogelijk</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">19:00-20:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Gevorderde jeugd</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Vrijdag */}
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-5 border-2 border-pink-200 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group">
-                <h3 className="text-lg font-bold text-pink-800 mb-4 flex items-center gap-2">
-                  <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
-                    <Calendar className="w-4 h-4 text-white" />
-                  </div>
-                  Vrijdag
-                </h3>
-                <div className="space-y-2 max-h-80 overflow-y-auto">
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">9:30-10:30</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium text-center">Buitenrit volwassenen</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">17:00-18:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium text-center">Gemiddeld-gevorderde jeugd</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">18:00-19:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium text-center">Gemiddeld-gevorderde jeugd</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">19:00-20:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium text-center">Springles gevorderd jeugd en volwassenen</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Zaterdag */}
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-5 border-2 border-pink-200 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group">
-                <h3 className="text-lg font-bold text-pink-800 mb-4 flex items-center gap-2">
-                  <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
-                    <Calendar className="w-4 h-4 text-white" />
-                  </div>
-                  Zaterdag
-                </h3>
-                <div className="space-y-2">
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">8:30-9:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Privéles</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">9:00-10:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Pensionles</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">10:00-11:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Gemiddelde jeugd</p>
-                  </div>
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">11:00-12:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium">Beginners Jeugd</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Zondag */}
-              <div className="bg-gradient-to-br from-pink-50 to-pink-100 rounded-2xl p-5 border-2 border-pink-200 shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 group">
-                <h3 className="text-lg font-bold text-pink-800 mb-4 flex items-center gap-2">
-                  <div className="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center">
-                    <Calendar className="w-4 h-4 text-white" />
-                  </div>
-                  Zondag
-                </h3>
-                <div className="space-y-2">
-                  <div className="bg-white/70 rounded-lg p-3 border border-pink-200 group-hover:bg-white/90 transition-colors">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Clock className="w-4 h-4 text-pink-600" />
-                      <span className="font-bold text-pink-800 text-sm">10:00-12:00</span>
-                    </div>
-                    <p className="text-pink-700 text-sm font-medium mb-3">Buitenrit</p>
-                    <Link href="/buitenritten" className="inline-flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white text-xs px-3 py-2 rounded-lg transition-colors duration-200">
-                      <Users className="w-3 h-3" />
-                      Aanmelden
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
 
         </div>
       </section>
