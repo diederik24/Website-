@@ -210,7 +210,7 @@ export default function AdminDashboard() {
             
             <div className="border rounded-lg p-4 hover:shadow-md transition-shadow">
               <h3 className="font-medium text-gray-900 mb-2">Onze Paarden</h3>
-              <p className="text-sm text-gray-600 mb-3">15 paarden met foto's en informatie</p>
+              <p className="text-sm text-gray-600 mb-3">9 paarden met foto's en informatie</p>
               <div className="flex space-x-2">
                 <a href="/onze-paarden" className="text-pink-600 hover:text-pink-700 text-sm">Bekijken</a>
                 <a href="/admin/paarden" className="text-gray-600 hover:text-gray-700 text-sm">Beheren</a>

@@ -618,7 +618,7 @@ export default function Home() {
               transition={{ duration: 0.6 }}
             >
               <div className="text-4xl md:text-5xl font-bold text-pink-600 mb-2">
-                <AnimatedCounter end={12} />
+                <AnimatedCounter end={9} />
               </div>
               <div className="text-gray-600 font-medium">
                 Manegepaarden

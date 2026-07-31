@@ -2,8 +2,15 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { Clock, Users, Shield, Star, Calendar, MapPin, CheckCircle, AlertTriangle, Coffee, Utensils, ChevronLeft, ChevronRight, X, Timer, Snowflake, Loader2 } from 'lucide-react'
+import { Clock, Users, Shield, Star, Calendar, MapPin, CheckCircle, AlertTriangle, Coffee, Utensils, ChevronLeft, ChevronRight, X, Timer, Snowflake, Loader2, Heart } from 'lucide-react'
 import { useState, useEffect } from 'react'
+import {
+  GROEP_OPTIES,
+  PRIVE_OPTIES,
+  getBuitenritOptie,
+  formatBuitenritOptieLabel,
+  type BuitenritOptie,
+} from '@/lib/buitenrit-opties'
 
 /** Volledige datums (jaar, maand 0-indexed, dag) die niet reserveerbaar zijn voor buitenritten */
 const BLOCKED_BUITENRIT_DATES: { year: number; month: number; day: number }[] = [
@@ -18,12 +25,89 @@ const BLOCKED_BUITENRIT_DATES: { year: number; month: number; day: number }[] = 
   { year: 2026, month: 6, day: 26 }, // 26 juli 2026
   { year: 2026, month: 7, day: 9 },  // 9 augustus 2026
   { year: 2026, month: 7, day: 23 }, // 23 augustus 2026
+  { year: 2026, month: 8, day: 5 },  // 5 september 2026
   { year: 2026, month: 8, day: 27 }, // 27 september 2026
 ]
 
 function isBlockedBuitenritDate(day: number, month: number, year: number) {
   return BLOCKED_BUITENRIT_DATES.some(
     (b) => b.year === year && b.month === month && b.day === day
+  )
+}
+
+const ACCENT_STYLES = {
+  amber: {
+    card: 'border-amber-200 bg-gradient-to-br from-amber-50 to-white',
+    badge: 'bg-amber-100 text-amber-800',
+    price: 'text-amber-700',
+    icon: 'bg-amber-100 text-amber-700',
+  },
+  green: {
+    card: 'border-green-200 bg-gradient-to-br from-green-50 to-white',
+    badge: 'bg-green-100 text-green-800',
+    price: 'text-green-700',
+    icon: 'bg-green-100 text-green-700',
+  },
+  rose: {
+    card: 'border-rose-200 bg-gradient-to-br from-rose-50 to-white',
+    badge: 'bg-rose-100 text-rose-800',
+    price: 'text-rose-700',
+    icon: 'bg-rose-100 text-rose-700',
+  },
+  pink: {
+    card: 'border-pink-200 bg-white/90 backdrop-blur-sm',
+    badge: 'bg-pink-100 text-pink-800',
+    price: 'text-pink-700',
+    icon: 'bg-pink-100 text-pink-700',
+  },
+} as const
+
+function RitOptieCard({
+  optie,
+  accent,
+  delay = 0,
+  compact = false,
+}: {
+  optie: BuitenritOptie
+  accent: keyof typeof ACCENT_STYLES
+  delay?: number
+  compact?: boolean
+}) {
+  const styles = ACCENT_STYLES[accent]
+
+  return (
+    <motion.div
+      className={`rounded-2xl border p-6 shadow-sm hover:shadow-lg transition-shadow duration-300 h-full flex flex-col ${styles.card}`}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, delay }}
+      viewport={{ once: true }}
+    >
+      <div className="flex items-start justify-between gap-3 mb-4">
+        <span className={`inline-flex px-3 py-1 rounded-full text-xs font-semibold tracking-wide ${styles.badge}`}>
+          {optie.niveau}
+        </span>
+        <div className={`w-9 h-9 rounded-full flex items-center justify-center ${styles.icon}`}>
+          <Clock className="w-4 h-4" />
+        </div>
+      </div>
+
+      <h4 className="text-lg font-bold text-gray-900 mb-1">{optie.gangen}</h4>
+      <p className={`text-gray-600 mb-5 ${compact ? 'text-sm' : 'text-sm leading-relaxed'}`}>
+        {optie.beschrijving}
+      </p>
+
+      <div className="mt-auto space-y-3">
+        <div className="flex items-center gap-2 text-sm text-gray-700">
+          <Timer className="w-4 h-4 text-gray-500" />
+          <span>{optie.duur}</span>
+        </div>
+        <div className={`text-2xl font-bold ${styles.price}`}>
+          {optie.prijsLabel}
+          <span className="text-sm font-medium text-gray-500 ml-1">p.p.</span>
+        </div>
+      </div>
+    </motion.div>
   )
 }
 
@@ -40,10 +124,16 @@ export default function BuitenrittenPage() {
     phone: '',
     experience: '',
     persons: '',
+    ritOption: '',
     arrangement: false,
     experienceDetails: '',
-    notes: ''
+    notes: '',
+    riders: [] as { lengte: string; gewicht: string }[],
   })
+  const selectedRitOptie = getBuitenritOptie(bookingData.ritOption)
+  const isPriveRit = selectedRitOptie?.type === 'prive'
+  const minPersons = isPriveRit ? 1 : 2
+  const maxPersons = 6
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
@@ -83,6 +173,14 @@ export default function BuitenrittenPage() {
 
   const isSunday = (day: number, month: number, year: number) => {
     return new Date(year, month, day).getDay() === 0
+  }
+
+  const isSaturday = (day: number, month: number, year: number) => {
+    return new Date(year, month, day).getDay() === 6
+  }
+
+  const isRideDay = (day: number, month: number, year: number) => {
+    return isSaturday(day, month, year) || isSunday(day, month, year)
   }
 
   const isArrangement = (day: number, month: number) => {
@@ -185,9 +283,11 @@ export default function BuitenrittenPage() {
           phone: '',
           experience: '',
           persons: '',
+          ritOption: '',
           arrangement: false,
           experienceDetails: '',
-          notes: ''
+          notes: '',
+          riders: [],
         })
         setShowBookingModal(false)
       }, 5000)
@@ -200,9 +300,54 @@ export default function BuitenrittenPage() {
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+
+    if (name === 'persons') {
+      const count = parseInt(value, 10)
+      const nextRiders = Number.isFinite(count) && count > 0
+        ? Array.from({ length: count }, (_, i) => bookingData.riders[i] || { lengte: '', gewicht: '' })
+        : []
+      setBookingData({
+        ...bookingData,
+        persons: value,
+        riders: nextRiders,
+      })
+      return
+    }
+
+    if (name === 'ritOption') {
+      const nextOptie = getBuitenritOptie(value)
+      const nextMin = nextOptie?.type === 'prive' ? 1 : 2
+      const currentPersons = parseInt(bookingData.persons, 10)
+      const personsValid = Number.isFinite(currentPersons) && currentPersons >= nextMin && currentPersons <= maxPersons
+      const nextCount = personsValid ? currentPersons : nextMin
+      const nextRiders = Array.from(
+        { length: nextCount },
+        (_, i) => bookingData.riders[i] || { lengte: '', gewicht: '' }
+      )
+
+      setBookingData({
+        ...bookingData,
+        ritOption: value,
+        persons: String(nextCount),
+        riders: nextRiders,
+      })
+      return
+    }
+
     setBookingData({
       ...bookingData,
-      [e.target.name]: e.target.value
+      [name]: value,
+    })
+  }
+
+  const handleRiderChange = (index: number, field: 'lengte' | 'gewicht', value: string) => {
+    const nextRiders = bookingData.riders.map((rider, i) =>
+      i === index ? { ...rider, [field]: value } : rider
+    )
+    setBookingData({
+      ...bookingData,
+      riders: nextRiders,
     })
   }
 
@@ -295,13 +440,20 @@ export default function BuitenrittenPage() {
 
   // Afteltimer voor volgende buitenrit
   useEffect(() => {
-    const getNextAvailableSunday = () => {
+    const getNextAvailableRideDay = () => {
       const now = new Date()
       let candidate = new Date(now)
       candidate.setHours(10, 0, 0, 0)
 
       for (let i = 0; i < 730; i++) {
-        if (candidate > now && candidate.getDay() === 0 && !isDateWithinWinterStop(candidate)) {
+        const day = candidate.getDay()
+        const isWeekendRide = day === 0 || day === 6
+        if (
+          candidate > now &&
+          isWeekendRide &&
+          !isDateWithinWinterStop(candidate) &&
+          !isBlockedBuitenritDate(candidate.getDate(), candidate.getMonth(), candidate.getFullYear())
+        ) {
           return candidate
         }
         candidate.setDate(candidate.getDate() + 1)
@@ -311,14 +463,14 @@ export default function BuitenrittenPage() {
     }
 
     const updateTimer = () => {
-      const nextSunday = getNextAvailableSunday()
-      if (!nextSunday) {
+      const nextRide = getNextAvailableRideDay()
+      if (!nextRide) {
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
         return
       }
 
       const now = new Date()
-      const difference = nextSunday.getTime() - now.getTime()
+      const difference = nextRide.getTime() - now.getTime()
 
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24))
@@ -398,7 +550,7 @@ export default function BuitenrittenPage() {
             >
               <MapPin className="w-12 h-12 text-yellow-400" />
               <h1 className="text-5xl md:text-6xl font-bold">
-                Zondagse <span className="text-yellow-400">Buitenritten</span>
+                Weekend <span className="text-yellow-400">Buitenritten</span>
               </h1>
               <Star className="w-12 h-12 text-yellow-400" />
             </motion.div>
@@ -422,7 +574,7 @@ export default function BuitenrittenPage() {
                   <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Winterstop Buitenritten</h2>
                   <p className="mt-2 text-sm md:text-base text-white/80 leading-relaxed max-w-2xl">
                     Van <strong className="text-white">1 november</strong> tot en met <strong className="text-white">31 maart</strong> plannen we geen buitenritten.
-                    Zodra het voorjaar begint, rijden we weer elke zondag uit. Meld je vast aan voor ritten vanaf 1 april!
+                    Zodra het voorjaar begint, rijden we weer elke zaterdag en zondag uit. Meld je vast aan voor ritten vanaf 1 april!
                   </p>
                 </div>
               </div>
@@ -498,9 +650,9 @@ export default function BuitenrittenPage() {
               <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6 mx-auto">
                 <Calendar className="w-8 h-8 text-green-600" />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Zondagse Ritten</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Weekendritten</h3>
               <p className="text-gray-600 text-center leading-relaxed">
-                Manege Duikse Hoef organiseert bijna het hele jaar buitenritten, er zijn vaste ritten van 1,5 uur bij voldoende aanmelding.
+                Bijna het hele jaar organiseren we buitenritten op zaterdag en zondag. Kies een rit die past bij jouw niveau: van beginnend tot gevorderd, of een privérit.
               </p>
             </motion.div>
 
@@ -626,48 +778,81 @@ export default function BuitenrittenPage() {
             </motion.div>
           </div>
 
-          {/* Tarieven */}
+          {/* Ritopties & Tarieven */}
           <motion.div
             id="tarieven"
-            className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 mb-16"
+            className="mb-16"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center flex items-center justify-center gap-3">
-              <Star className="w-8 h-8 text-yellow-500" />
-              Tarieven Buitenritten
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Gewone Buitenrit */}
-              <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-xl p-6 border border-green-200">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Buitenrit 1,5 uur</h3>
-                <p className="text-gray-600 text-center mb-6">Zondag van 10.00 - 11.30 uur</p>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                    <span className="text-gray-700">Jeugd</span>
-                    <span className="text-xl font-bold text-green-600">€ 47,50</span>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                    <span className="text-gray-700">Volwassene</span>
-                    <span className="text-xl font-bold text-green-600">€ 47,50</span>
-                  </div>
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold text-gray-900 mb-3 flex items-center justify-center gap-3">
+                <Star className="w-8 h-8 text-yellow-500" />
+                Kies je buitenrit
+              </h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Of je net begint of al ervaren bent: er is een rit die bij jou past. Alle ritten gaan door bij voldoende aanmeldingen.
+              </p>
+            </div>
+
+            {/* Groepsritten */}
+            <div className="mb-10">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                  <Users className="w-5 h-5 text-green-700" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">Groepsritten</h3>
+                  <p className="text-sm text-gray-600">Samen het bos in, 2 tot 6 personen</p>
                 </div>
               </div>
 
-              {/* Buitenrit Arrangement */}
-              <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl p-6 border border-purple-200">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Buitenrit Arrangement</h3>
-                <p className="text-gray-600 text-center mb-6">Koffie, buitenrit + lekkere lunch (excl. dranken)</p>
-                <div className="flex justify-center items-center p-3 bg-white rounded-lg">
-                  <span className="text-2xl font-bold text-purple-600">€ 62,50</span>
-                </div>
-                <p className="text-sm text-gray-500 text-center mt-4">
-                  * Een buitenrit gaat alleen door bij voldoende aanmeldingen
-                </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {GROEP_OPTIES.map((optie, index) => (
+                  <RitOptieCard
+                    key={optie.id}
+                    optie={optie}
+                    accent={index === 0 ? 'amber' : index === 1 ? 'green' : 'rose'}
+                    delay={index * 0.08}
+                  />
+                ))}
               </div>
             </div>
+
+            {/* Privéritten */}
+            <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-pink-50 via-rose-50 to-white border border-pink-100 p-6 md:p-8">
+              <div className="absolute -top-16 -right-16 w-48 h-48 bg-pink-200/30 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute -bottom-20 -left-10 w-40 h-40 bg-rose-200/25 rounded-full blur-3xl pointer-events-none" />
+
+              <div className="relative flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-full bg-pink-100 flex items-center justify-center">
+                  <Heart className="w-5 h-5 text-pink-600" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-gray-900">Privérit</h3>
+                  <p className="text-sm text-gray-600">
+                    Persoonlijke begeleiding, 1 tot 1,5 uur afhankelijk van je niveau
+                  </p>
+                </div>
+              </div>
+
+              <div className="relative grid grid-cols-1 md:grid-cols-3 gap-6">
+                {PRIVE_OPTIES.map((optie, index) => (
+                  <RitOptieCard
+                    key={optie.id}
+                    optie={optie}
+                    accent="pink"
+                    delay={0.15 + index * 0.08}
+                    compact
+                  />
+                ))}
+              </div>
+            </div>
+
+            <p className="text-sm text-gray-500 text-center mt-6">
+              Bij het aanmelden kies je de ritoptie die bij jouw ervaring past.
+            </p>
           </motion.div>
 
           {/* Rijkleding */}
@@ -903,14 +1088,14 @@ export default function BuitenrittenPage() {
               {/* Kalender dagen */}
               {[...Array(getDaysInMonth(currentMonth, currentYear))].map((_, i) => {
                 const day = i + 1
-                const isSundayDay = isSunday(day, currentMonth, currentYear)
+                const isRideDayDate = isRideDay(day, currentMonth, currentYear)
                 const isArrangementDay = isArrangement(day, currentMonth)
                 const isFuture = isFutureDate(day, currentMonth, currentYear)
                 const currentDate = new Date(currentYear, currentMonth, day)
                 const isWinterStopDay = isDateWithinWinterStop(currentDate)
                 const isBlockedDay = isBlockedBuitenritDate(day, currentMonth, currentYear)
                 
-                if (isSundayDay) {
+                if (isRideDayDate) {
                   if (isFuture && !isWinterStopDay && isBlockedDay) {
                     return (
                       <div
@@ -926,14 +1111,14 @@ export default function BuitenrittenPage() {
                     )
                   }
                   if (isFuture && !isWinterStopDay) {
-                    // Toekomstige zondag - klikbaar
+                    // Toekomstige zaterdag/zondag - klikbaar
                     return (
                       <motion.div
                         key={day}
                         onClick={() => handleDateClick(day, isArrangementDay)}
                         className={`h-8 bg-white border-2 rounded flex items-center justify-center cursor-pointer hover:bg-green-50 transition-all duration-300 relative text-xs ${
                           isArrangementDay 
-                            ? 'border-purple-300 hover:bg-purple-50' 
+                            ? 'border-pink-300 hover:bg-pink-50' 
                             : 'border-green-300 hover:bg-green-50'
                         }`}
                         whileHover={{ scale: 1.1 }}
@@ -942,11 +1127,11 @@ export default function BuitenrittenPage() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <div className={`font-bold ${isArrangementDay ? 'text-purple-600' : 'text-green-600'}`}>
+                        <div className={`font-bold ${isArrangementDay ? 'text-pink-600' : 'text-green-600'}`}>
                           {day}
                         </div>
                         {isArrangementDay && (
-                          <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-purple-500 rounded-full"></div>
+                          <div className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-pink-500 rounded-full"></div>
                         )}
                       </motion.div>
                     )
@@ -956,12 +1141,12 @@ export default function BuitenrittenPage() {
                         <div className="font-bold text-blue-600">{day}</div>
                         <Snowflake className="absolute -top-0.5 -right-0.5 w-3 h-3 text-blue-400" />
                         {isArrangementDay && (
-                          <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-purple-400 rounded-full"></div>
+                          <div className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-pink-400 rounded-full"></div>
                         )}
                       </div>
                     )
                   } else {
-                    // Verleden zondag - niet klikbaar, grijs
+                    // Verleden ritdag - niet klikbaar, grijs
                     return (
                       <div key={day} className="h-8 bg-gray-200 border-2 border-gray-300 rounded flex items-center justify-center relative text-xs">
                         <div className="font-bold text-gray-500">{day}</div>
@@ -985,7 +1170,7 @@ export default function BuitenrittenPage() {
             {/* Info tekst */}
             <div className="text-center mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-xs text-gray-600">
-                <strong>Let op:</strong> Buitenritten gaan alleen door bij voldoende aanmeldingen. Je kunt je alleen aanmelden voor toekomstige datums buiten de winterstop (1 november t/m 31 maart).
+                <strong>Let op:</strong> Buitenritten gaan alleen door bij voldoende aanmeldingen (minimaal 2, maximaal 6 personen per groep). Je kunt je alleen aanmelden voor toekomstige zaterdagen en zondagen buiten de winterstop (1 november t/m 31 maart).
               </p>
             </div>
           </motion.div>
@@ -1209,7 +1394,8 @@ export default function BuitenrittenPage() {
                           <span className="font-semibold">{selectedDate.day} {months[selectedDate.month]} {selectedDate.year}</span>
                           <span>•</span>
                           <span className="font-semibold">
-                            {selectedDate.type === 'arrangement' ? '09:15 - 12:00' : '10:00 - 11:30'}
+                            {selectedRitOptie?.duur
+                              || (selectedDate.type === 'arrangement' ? '09:15 - 12:00' : 'Zaterdag & zondag')}
                           </span>
                         </div>
                       </div>
@@ -1281,6 +1467,41 @@ export default function BuitenrittenPage() {
                             </div>
 
                             <div>
+                              <label htmlFor="ritOption" className="block text-sm font-semibold text-gray-700 mb-1">
+                                Ritoptie *
+                              </label>
+                              <select
+                                id="ritOption"
+                                name="ritOption"
+                                value={bookingData.ritOption}
+                                onChange={handleInputChange}
+                                required
+                                className="w-full px-4 py-2.5 bg-white border-2 border-gray-300 rounded-lg shadow-sm hover:border-pink-400 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-300 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E')] bg-[length:1.5em_1.5em] bg-[right_0.75rem_center] bg-no-repeat text-gray-700 font-medium"
+                              >
+                                <option value="">Kies je ritoptie</option>
+                                <optgroup label="Groepsrit">
+                                  {GROEP_OPTIES.map((optie) => (
+                                    <option key={optie.id} value={optie.id}>
+                                      {optie.niveau} – {optie.duur} ({optie.prijsLabel})
+                                    </option>
+                                  ))}
+                                </optgroup>
+                                <optgroup label="Privérit">
+                                  {PRIVE_OPTIES.map((optie) => (
+                                    <option key={optie.id} value={optie.id}>
+                                      {optie.niveau} – {optie.duur} ({optie.prijsLabel})
+                                    </option>
+                                  ))}
+                                </optgroup>
+                              </select>
+                              {selectedRitOptie && (
+                                <p className="mt-2 text-sm text-gray-600">
+                                  {selectedRitOptie.gangen} · {selectedRitOptie.duur}
+                                </p>
+                              )}
+                            </div>
+
+                            <div>
                               <label htmlFor="experience" className="block text-sm font-semibold text-gray-700 mb-1">
                                 Ervaring *
                               </label>
@@ -1312,17 +1533,80 @@ export default function BuitenrittenPage() {
                                 className="w-full px-4 py-2.5 bg-white border-2 border-gray-300 rounded-lg shadow-sm hover:border-pink-400 focus:ring-2 focus:ring-pink-500 focus:border-pink-500 transition-all duration-300 cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22currentColor%22 stroke-width=%222%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22%3E%3Cpolyline points=%226 9 12 15 18 9%22%3E%3C/polyline%3E%3C/svg%3E')] bg-[length:1.5em_1.5em] bg-[right_0.75rem_center] bg-no-repeat text-gray-700 font-medium"
                               >
                                 <option value="">Selecteer aantal personen</option>
-                                <option value="1">1 persoon</option>
-                                <option value="2">2 personen</option>
-                                <option value="3">3 personen</option>
-                                <option value="4">4 personen</option>
-                                <option value="5">5 personen</option>
-                                <option value="6">6 personen</option>
-                                <option value="7">7 personen</option>
-                                <option value="8">8 personen</option>
+                                {Array.from({ length: maxPersons - minPersons + 1 }, (_, i) => {
+                                  const count = minPersons + i
+                                  return (
+                                    <option key={count} value={String(count)}>
+                                      {count === 1 ? '1 persoon' : `${count} personen`}
+                                    </option>
+                                  )
+                                })}
                               </select>
+                              <p className="mt-1 text-xs text-gray-500">
+                                {isPriveRit
+                                  ? 'Privérit: 1 tot 6 personen'
+                                  : 'Groepsrit: minimaal 2, maximaal 6 personen'}
+                              </p>
                             </div>
                           </div>
+
+                          {bookingData.riders.length > 0 ? (
+                            <div className="bg-green-50 border-2 border-green-300 rounded-xl p-4 space-y-4">
+                              <div>
+                                <h4 className="text-base font-bold text-gray-900">Lengte & gewicht per ruiter *</h4>
+                                <p className="text-sm text-gray-600 mt-1">
+                                  Vul voor iedere ruiter lengte (cm) en gewicht (kg) in. Zo kiezen we het beste paard.
+                                </p>
+                              </div>
+                              {bookingData.riders.map((rider, index) => (
+                                <div key={index} className="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-white rounded-lg p-4 border border-green-200 shadow-sm">
+                                  <p className="sm:col-span-2 text-sm font-semibold text-gray-800">
+                                    Ruiter {index + 1}
+                                    {index === 0 ? ' (aanmelder)' : ''}
+                                  </p>
+                                  <div>
+                                    <label htmlFor={`lengte-${index}`} className="block text-sm font-semibold text-gray-700 mb-1">
+                                      Lengte (cm) *
+                                    </label>
+                                    <input
+                                      id={`lengte-${index}`}
+                                      type="number"
+                                      min={100}
+                                      max={230}
+                                      required
+                                      value={rider.lengte}
+                                      onChange={(e) => handleRiderChange(index, 'lengte', e.target.value)}
+                                      className="w-full px-3 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+                                      placeholder="bijv. 165"
+                                    />
+                                  </div>
+                                  <div>
+                                    <label htmlFor={`gewicht-${index}`} className="block text-sm font-semibold text-gray-700 mb-1">
+                                      Gewicht (kg) *
+                                    </label>
+                                    <input
+                                      id={`gewicht-${index}`}
+                                      type="number"
+                                      min={30}
+                                      max={150}
+                                      required
+                                      value={rider.gewicht}
+                                      onChange={(e) => handleRiderChange(index, 'gewicht', e.target.value)}
+                                      className="w-full px-3 py-2.5 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
+                                      placeholder="bijv. 65"
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
+                              <h4 className="text-sm font-bold text-amber-900 mb-1">Lengte & gewicht *</h4>
+                              <p className="text-sm text-amber-800">
+                                Kies eerst een ritoptie en het aantal personen. Daarna vul je hier per ruiter lengte en gewicht in.
+                              </p>
+                            </div>
+                          )}
 
                           {/* Arrangement Checkbox - Tijdelijk verwijderd */}
                           {/* <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
@@ -1410,27 +1694,33 @@ export default function BuitenrittenPage() {
                             <Clock className="w-5 h-5 text-blue-600" />
                             <div>
                               <div className="font-semibold text-gray-900">
-                                {selectedDate.type === 'arrangement' ? '09:15 - 12:00' : '10:00 - 11:30'}
+                                {selectedRitOptie?.duur || (selectedDate.type === 'arrangement' ? '09:15 - 12:00' : 'Op afspraak')}
                               </div>
-                              <div className="text-sm text-gray-600">Tijd</div>
+                              <div className="text-sm text-gray-600">Duur</div>
                             </div>
                           </div>
 
                           <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
                             <span className="text-xl font-bold text-green-600">
-                              {selectedDate.type === 'arrangement' ? '€62,50' : '€47,50'}
+                              {selectedRitOptie?.prijsLabel || '—'}
                             </span>
                             <div>
                               <div className="font-semibold text-gray-900">per persoon</div>
-                              <div className="text-sm text-gray-600">Prijs</div>
+                              <div className="text-sm text-gray-600">
+                                {selectedRitOptie ? formatBuitenritOptieLabel(selectedRitOptie) : 'Kies eerst een ritoptie'}
+                              </div>
                             </div>
                           </div>
 
                           <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
-                            <Users className="w-5 h-5 text-purple-600" />
+                            <Users className="w-5 h-5 text-pink-600" />
                             <div>
-                              <div className="font-semibold text-gray-900">Maximaal 8</div>
-                              <div className="text-sm text-gray-600">personen per rit</div>
+                              <div className="font-semibold text-gray-900">
+                                {isPriveRit ? '1 – 6' : '2 – 6'} personen
+                              </div>
+                              <div className="text-sm text-gray-600">
+                                {isPriveRit ? 'per privérit' : 'per groepsrit'}
+                              </div>
                             </div>
                           </div>
 

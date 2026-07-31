@@ -69,42 +69,6 @@ const fallbackPaarden = [
     eigenschappen: ['Lief', 'Betrouwbaar', 'Unieke gangen']
   },
   {
-    id: 2,
-    naam: 'Lotje',
-    ras: 'Kruising Welsh en Haflinger',
-    leeftijd: 'Onbekend',
-    geslacht: 'Merrie' as const,
-    kleur: 'Wildkleur bruin',
-    beschrijving: 'Lotje is heel lief en houdt van knuffelen en poetsen maar kan soms een beetje ongeduldig zijn met opstappen. Lotje loopt graag door, ze rijdt mee met de gemiddeld-gevorderd lessen.',
-    hoofdfoto: '/paarden/lotje.jpg',
-    foto_urls: ['/paarden/lotje.jpg'],
-    eigenschappen: ['Lief', 'Tempramentje', 'Knuffelkont']
-  },
-  {
-    id: 3,
-    naam: 'Lilly',
-    ras: 'Kruising Welsh en Haflinger',
-    leeftijd: 'Onbekend',
-    geslacht: 'Merrie' as const,
-    kleur: 'Wildkleur bruin',
-      beschrijving: 'Lilly houdt heel erg van knuffelen en poetsen, ze heeft uren geduld. Lilly zit heel lekker met rijden en vooral met doorzitten maar ze kan soms ook een beetje eigenwijs zijn. Lilly loopt mee met de beginners-gemiddeld-gevorderden lessen.',
-    hoofdfoto: '/paarden/lily.jpg',
-    foto_urls: ['/paarden/lily.jpg'],
-    eigenschappen: ['Knuffelkont', 'Betrouwbaar', 'Eigenwijs']
-  },
-  {
-    id: 4,
-    naam: 'Boy',
-    ras: 'Onbekend',
-    leeftijd: 'Onbekend',
-    geslacht: 'Ruin' as const,
-    kleur: 'Bruin',
-    beschrijving: 'Boy kijkt vaak chagrijnig maar hij is super lief. Boy houdt er van om te springen en lekker op zijn gemakje mee te lopen met de dressuur lessen. Boy loopt mee met de gemiddeld-gevorderde en gevorderde lessen.',
-    hoofdfoto: '/paarden/boy.jpg',
-    foto_urls: ['/paarden/boy.jpg'],
-    eigenschappen: ['Lief', 'Eigenwijs', 'Mooi']
-  },
-  {
     id: 5,
     naam: 'Ginger (Risico)',
     ras: 'Onbekend',
@@ -280,42 +244,6 @@ export default function OnzePaardenPage() {
       hoofdfoto: '/paarden/vina.jpg',
       foto_urls: ['/paarden/vina.jpg'],
       eigenschappen: ['Lief', 'Betrouwbaar', 'Unieke gangen']
-    },
-    {
-      id: 2,
-      naam: 'Lotje',
-      ras: 'Kruising Welsh en Haflinger',
-      leeftijd: 'Onbekend',
-      geslacht: 'Merrie' as const,
-      kleur: 'Wildkleur bruin',
-      beschrijving: 'Lotje is heel lief en houdt van knuffelen en poetsen maar kan soms een beetje ongeduldig zijn met opstappen. Lotje loopt graag door, ze rijdt mee met de gemiddeld-gevorderd lessen.',
-      hoofdfoto: '/paarden/lotje.jpg',
-      foto_urls: ['/paarden/lotje.jpg'],
-      eigenschappen: ['Lief', 'Tempramentje', 'Knuffelkont']
-    },
-    {
-      id: 3,
-      naam: 'Lilly',
-      ras: 'Kruising Welsh en Haflinger',
-      leeftijd: 'Onbekend',
-      geslacht: 'Merrie' as const,
-      kleur: 'Wildkleur bruin',
-      beschrijving: 'Lilly houdt heel erg van knuffelen en poetsen, ze heeft uren geduld. Lilly zit heel lekker met rijden en vooral met doorzitten maar ze kan soms ook een beetje eigenwijs zijn. Lilly loopt mee met de beginners-gemiddeld-gevorderden lessen.',
-      hoofdfoto: '/paarden/lily.jpg',
-      foto_urls: ['/paarden/lily.jpg'],
-      eigenschappen: ['Knuffelkont', 'Betrouwbaar', 'Eigenwijs']
-    },
-    {
-      id: 4,
-      naam: 'Boy',
-      ras: 'Onbekend',
-      leeftijd: 'Onbekend',
-      geslacht: 'Ruin' as const,
-      kleur: 'Bruin',
-      beschrijving: 'Boy kijkt vaak chagrijnig maar hij is super lief. Boy houdt er van om te springen en lekker op zijn gemakje mee te lopen met de dressuur lessen. Boy loopt mee met de gemiddeld-gevorderde en gevorderde lessen.',
-      hoofdfoto: '/paarden/boy.jpg',
-      foto_urls: ['/paarden/boy.jpg'],
-      eigenschappen: ['Lief', 'Eigenwijs', 'Mooi']
     },
     {
       id: 5,
@@ -550,12 +478,12 @@ export default function OnzePaardenPage() {
               transition={{ type: "spring", stiffness: 300 }}
             >
               {/* Foto */}
-              <div className={`relative h-64 overflow-hidden ${(paard.naam === 'Fönix') || (paard.naam === 'Skittle') || (paard.naam === 'Linde') || (paard.naam === 'Uquebelle') || (paard.naam === 'Boy') || (paard.naam === 'Bartje') || (paard.naam === 'Ginger (Risico)') || (paard.naam === 'Iske') || (paard.naam === 'Lilly') || (paard.naam === 'Lotje') || (paard.naam === 'Pietertje') || (paard.naam === 'Vina') ? 'bg-black' : ''}`}>
-                {(paard.hoofdfoto && paard.hoofdfoto.startsWith('data:')) || (paard.naam === 'Fönix') || (paard.naam === 'Skittle') || (paard.naam === 'Linde') || (paard.naam === 'Uquebelle') || (paard.naam === 'Boy') || (paard.naam === 'Bartje') || (paard.naam === 'Ginger (Risico)') || (paard.naam === 'Iske') || (paard.naam === 'Lilly') || (paard.naam === 'Lotje') || (paard.naam === 'Pietertje') || (paard.naam === 'Vina') ? (
+              <div className={`relative h-64 overflow-hidden ${(paard.naam === 'Fönix') || (paard.naam === 'Skittle') || (paard.naam === 'Linde') || (paard.naam === 'Uquebelle') || (paard.naam === 'Bartje') || (paard.naam === 'Ginger (Risico)') || (paard.naam === 'Iske') || (paard.naam === 'Pietertje') || (paard.naam === 'Vina') ? 'bg-black' : ''}`}>
+                {(paard.hoofdfoto && paard.hoofdfoto.startsWith('data:')) || (paard.naam === 'Fönix') || (paard.naam === 'Skittle') || (paard.naam === 'Linde') || (paard.naam === 'Uquebelle') || (paard.naam === 'Bartje') || (paard.naam === 'Ginger (Risico)') || (paard.naam === 'Iske') || (paard.naam === 'Pietertje') || (paard.naam === 'Vina') ? (
                   <img
                     src={paard.hoofdfoto}
                     alt={paard.naam}
-                    className={`w-full h-full ${(paard.naam === 'Fönix') || (paard.naam === 'Skittle') || (paard.naam === 'Linde') || (paard.naam === 'Uquebelle') || (paard.naam === 'Boy') || (paard.naam === 'Bartje') || (paard.naam === 'Ginger (Risico)') || (paard.naam === 'Iske') || (paard.naam === 'Lilly') || (paard.naam === 'Lotje') || (paard.naam === 'Pietertje') || (paard.naam === 'Vina') ? 'object-contain' : 'object-cover'}`}
+                    className={`w-full h-full ${(paard.naam === 'Fönix') || (paard.naam === 'Skittle') || (paard.naam === 'Linde') || (paard.naam === 'Uquebelle') || (paard.naam === 'Bartje') || (paard.naam === 'Ginger (Risico)') || (paard.naam === 'Iske') || (paard.naam === 'Pietertje') || (paard.naam === 'Vina') ? 'object-contain' : 'object-cover'}`}
                   />
                 ) : (
                   <div className="absolute inset-0 bg-gradient-to-br from-pink-200 to-blue-200 flex items-center justify-center">

@@ -1,4 +1,9 @@
 import { sendEmailViaAPI } from './email-api-client'
+import {
+  getBuitenritOptie,
+  formatBuitenritOptieLabel,
+  type BuitenritOptieId,
+} from './buitenrit-opties'
 
 export interface BuitenritSignupData {
   name: string
@@ -6,9 +11,11 @@ export interface BuitenritSignupData {
   phone: string
   experience: string
   persons: string
+  ritOption: BuitenritOptieId
   arrangement: boolean
   experienceDetails?: string
   notes?: string
+  riders: { lengte: string; gewicht: string }[]
   selectedDate: {
     day: number
     month: number
@@ -25,10 +32,46 @@ export async function sendBuitenritSignupEmail(formData: BuitenritSignupData) {
     'Juli', 'Augustus', 'September', 'Oktober', 'November', 'December'
   ]
 
+  const gekozenOptie = getBuitenritOptie(formData.ritOption)
+  const ritLabel = gekozenOptie ? formatBuitenritOptieLabel(gekozenOptie) : 'Buitenrit'
+  const ritDuur = gekozenOptie?.duur || '1,5 uur'
+  const ritGangen = gekozenOptie?.gangen || 'Stap / draf / galop'
+  const pricePerPerson = gekozenOptie?.prijsLabel.replace(' ', '') || (formData.arrangement ? '€62,50' : '€47,50')
+  const priceNumber = gekozenOptie?.prijsNumber ?? (formData.arrangement ? 62.50 : 47.50)
+
+  // Roze kleuren die overeenkomen met het formulier (pink-500 = #ec4899, pink-600 = #db2777)
+  const pink500 = '#ec4899'
+  const pink600 = '#db2777'
+  const pink50 = '#fdf2f8'
+  const pink100 = '#fce7f3'
+  const pink700 = '#be185d'
+
+  const ridersSummary = (formData.riders || [])
+    .map((rider, index) => `Ruiter ${index + 1}: ${rider.lengte} cm / ${rider.gewicht} kg`)
+    .join('\n')
+
+  const ridersHtml = (formData.riders || [])
+    .map(
+      (rider, index) => `
+            <div class="info-row" style="margin: 10px 0; display: flex; justify-content: space-between;">
+                <span style="font-weight: bold; color: ${pink700};">Ruiter ${index + 1}:</span>
+                <span style="color: #333;">${rider.lengte} cm / ${rider.gewicht} kg</span>
+            </div>`
+    )
+    .join('')
+
+  const ridersNotificationHtml = (formData.riders || [])
+    .map(
+      (rider, index) => `
+            <div class="info-row">
+                <span class="info-label">Ruiter ${index + 1}:</span>
+                <span class="info-value">${rider.lengte} cm / ${rider.gewicht} kg</span>
+            </div>`
+    )
+    .join('')
+
   const dateString = `${formData.selectedDate.day} ${months[formData.selectedDate.month]} ${formData.selectedDate.year}`
-  const timeString = formData.selectedDate.type === 'arrangement' ? '09:15 - 12:00' : '10:00 - 11:30'
-  const pricePerPerson = formData.arrangement ? '€62,50' : '€47,50'
-  const priceNumber = formData.arrangement ? 62.50 : 47.50
+  const timeString = formData.selectedDate.type === 'arrangement' ? '09:15 - 12:00' : ritDuur
   const totalPrice = (parseInt(formData.persons) * priceNumber).toFixed(2).replace('.', ',')
   
   // Bereken aankomsttijd (15 minuten voor de start)
@@ -58,17 +101,10 @@ export async function sendBuitenritSignupEmail(formData: BuitenritSignupData) {
   
   const startStr = formatDate(startUTC)
   const endStr = formatDate(endUTC)
-  const title = encodeURIComponent('Buitenrit Manege Duikse Hoef')
-  const details = encodeURIComponent(`Buitenrit aanmelding bevestigd\n\nDatum: ${dateString}\nTijd: ${timeString}\nAantal personen: ${formData.persons}`)
+  const title = encodeURIComponent(`Buitenrit Manege Duikse Hoef – ${ritLabel}`)
+  const details = encodeURIComponent(`Buitenrit aanmelding bevestigd\n\nDatum: ${dateString}\nRit: ${ritLabel}\nGangen: ${ritGangen}\nDuur: ${ritDuur}\nAantal personen: ${formData.persons}\n${ridersSummary}`)
   const location = encodeURIComponent('Duikse Hoef 6, 5175 PG Loon op Zand')
   const calendarLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startStr}/${endStr}&details=${details}&location=${location}`
-
-  // Roze kleuren die overeenkomen met het formulier (pink-500 = #ec4899, pink-600 = #db2777)
-  const pink500 = '#ec4899'
-  const pink600 = '#db2777'
-  const pink50 = '#fdf2f8'
-  const pink100 = '#fce7f3'
-  const pink700 = '#be185d'
 
   const htmlBody = `
 <!DOCTYPE html>
@@ -265,12 +301,16 @@ export async function sendBuitenritSignupEmail(formData: BuitenritSignupData) {
                 <span style="color: #333; font-weight: bold; font-size: 18px;">${dateString}</span>
             </div>
             <div class="info-row" style="margin: 10px 0; display: flex; justify-content: space-between;">
-                <span style="font-weight: bold; color: ${pink700};">Tijd:</span>
-                <span style="color: #333; font-weight: bold;">${timeString}</span>
+                <span style="font-weight: bold; color: ${pink700};">Rit:</span>
+                <span style="color: #333; font-weight: bold;">${ritLabel}</span>
+            </div>
+            <div class="info-row" style="margin: 10px 0; display: flex; justify-content: space-between;">
+                <span style="font-weight: bold; color: ${pink700};">Gangen:</span>
+                <span style="color: #333;">${ritGangen}</span>
             </div>
             <div class="info-row" style="margin: 10px 0; display: flex; justify-content: space-between;">
                 <span style="font-weight: bold; color: ${pink700};">Duur:</span>
-                <span style="color: #333;">${formData.selectedDate.type === 'arrangement' ? '2,75 uur' : '1,5 uur'}</span>
+                <span style="color: #333;">${ritDuur}</span>
             </div>
         </div>
 
@@ -315,6 +355,7 @@ export async function sendBuitenritSignupEmail(formData: BuitenritSignupData) {
                 <span style="font-weight: bold; color: ${pink700};">Aantal personen:</span>
                 <span style="color: #333; font-weight: bold;">${formData.persons}</span>
             </div>
+            ${ridersHtml}
         </div>
 
         <div class="price-box" style="background-color: #f9fafb; border: 2px solid ${pink500}; padding: 20px; margin: 20px 0; border-radius: 5px; text-align: center;">
@@ -410,7 +451,9 @@ Buitenrit Aanmelding Bevestigd - Manege Duikse Hoef
 📅 Buitenrit Details:
 Datum: ${dateString}
 Tijd: ${timeString}
-Duur: ${formData.selectedDate.type === 'arrangement' ? '2,75 uur' : '1,5 uur'}
+Duur: ${ritDuur}
+Rit: ${ritLabel}
+Gangen: ${ritGangen}
 
 ⏰ Belangrijk: We verwachten je 15 minuten van tevoren (om ${arrivalTimeString}) zodat we alles kunnen voorbereiden en je veiligheidsinstructies kunnen geven.
 
@@ -420,7 +463,7 @@ Email: ${formData.email}
 Telefoon: ${formData.phone}
 Ervaring: ${formData.experience}
 Aantal personen: ${formData.persons}
-
+${ridersSummary ? `Lengte & gewicht:\n${ridersSummary}\n` : ''}
 💰 Kostenoverzicht:
 ${formData.persons} persoon(en) × ${pricePerPerson} = €${totalPrice} totaal
 
@@ -596,7 +639,7 @@ info@manegeduiksehoef.nl | +31 620685310
             </div>
             <div class="info-row">
                 <span class="info-label">Type:</span>
-                <span class="info-value"><strong>${formData.selectedDate.type === 'arrangement' ? 'Buitenrit Arrangement' : 'Buitenrit 1,5 uur'}</strong></span>
+                <span class="info-value"><strong>${ritLabel}</strong></span>
             </div>
             <div class="info-row">
                 <span class="info-label">Prijs per persoon:</span>
@@ -636,6 +679,7 @@ info@manegeduiksehoef.nl | +31 620685310
                 <span class="info-label">Ervaring:</span>
                 <span class="info-value">${formData.experience}</span>
             </div>
+            ${ridersNotificationHtml}
         </div>
 
         ${formData.experienceDetails ? `
@@ -668,7 +712,9 @@ Manege Duikse Hoef - Nieuwe buitenrit aanmelding
 Rit Details:
 - Datum: ${dateString}
 - Tijd: ${timeString}
-- Type: ${formData.selectedDate.type === 'arrangement' ? 'Buitenrit Arrangement' : 'Buitenrit 1,5 uur'}
+- Type: ${ritLabel}
+- Gangen: ${ritGangen}
+- Duur: ${ritDuur}
 - Prijs: ${pricePerPerson} per persoon
 
 Persoonlijke Gegevens:
@@ -677,7 +723,7 @@ Persoonlijke Gegevens:
 - Telefoon: ${formData.phone}
 - Ervaring: ${formData.experience}
 - Aantal personen: ${formData.persons}
-- Totaal bedrag: €${totalPrice}
+${ridersSummary ? `- Lengte & gewicht:\n${ridersSummary.split('\n').map((line) => `  ${line}`).join('\n')}\n` : ''}- Totaal bedrag: €${totalPrice}
 
 ${formData.experienceDetails ? `Ervaring Details:\n${formData.experienceDetails}\n` : ''}
 ${formData.notes ? `Opmerkingen:\n${formData.notes}\n` : ''}
