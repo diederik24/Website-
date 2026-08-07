@@ -27,16 +27,12 @@ export async function POST(request: NextRequest) {
     }
 
     const personsCount = parseInt(persons, 10)
-    const minPersons = gekozenOptie.type === 'prive' ? 1 : 2
+    const minPersons = 1
     const maxPersons = 6
 
     if (!Number.isFinite(personsCount) || personsCount < minPersons || personsCount > maxPersons) {
       return NextResponse.json(
-        {
-          error: gekozenOptie.type === 'prive'
-            ? 'Privérit: kies 1 tot 6 personen.'
-            : 'Groepsrit: minimaal 2 en maximaal 6 personen.',
-        },
+        { error: 'Kies 1 tot 6 personen.' },
         { status: 400 }
       )
     }

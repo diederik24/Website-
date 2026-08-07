@@ -23,7 +23,10 @@ const BLOCKED_BUITENRIT_DATES: { year: number; month: number; day: number }[] = 
   { year: 2026, month: 6, day: 12 }, // 12 juli 2026
   { year: 2026, month: 6, day: 19 }, // 19 juli 2026
   { year: 2026, month: 6, day: 26 }, // 26 juli 2026
+  { year: 2026, month: 7, day: 8 },  // 8 augustus 2026
   { year: 2026, month: 7, day: 9 },  // 9 augustus 2026
+  { year: 2026, month: 7, day: 14 }, // 14 augustus 2026
+  { year: 2026, month: 7, day: 15 }, // 15 augustus 2026
   { year: 2026, month: 7, day: 23 }, // 23 augustus 2026
   { year: 2026, month: 8, day: 5 },  // 5 september 2026
   { year: 2026, month: 8, day: 27 }, // 27 september 2026
@@ -132,7 +135,7 @@ export default function BuitenrittenPage() {
   })
   const selectedRitOptie = getBuitenritOptie(bookingData.ritOption)
   const isPriveRit = selectedRitOptie?.type === 'prive'
-  const minPersons = isPriveRit ? 1 : 2
+  const minPersons = 1
   const maxPersons = 6
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -316,8 +319,7 @@ export default function BuitenrittenPage() {
     }
 
     if (name === 'ritOption') {
-      const nextOptie = getBuitenritOptie(value)
-      const nextMin = nextOptie?.type === 'prive' ? 1 : 2
+      const nextMin = 1
       const currentPersons = parseInt(bookingData.persons, 10)
       const personsValid = Number.isFinite(currentPersons) && currentPersons >= nextMin && currentPersons <= maxPersons
       const nextCount = personsValid ? currentPersons : nextMin
@@ -804,7 +806,7 @@ export default function BuitenrittenPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-bold text-gray-900">Groepsritten</h3>
-                  <p className="text-sm text-gray-600">Samen het bos in, 2 tot 6 personen</p>
+                  <p className="text-sm text-gray-600">Samen het bos in, 1 tot 6 personen</p>
                 </div>
               </div>
 
@@ -1170,7 +1172,7 @@ export default function BuitenrittenPage() {
             {/* Info tekst */}
             <div className="text-center mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-xs text-gray-600">
-                <strong>Let op:</strong> Buitenritten gaan alleen door bij voldoende aanmeldingen (minimaal 2, maximaal 6 personen per groep). Je kunt je alleen aanmelden voor toekomstige zaterdagen en zondagen buiten de winterstop (1 november t/m 31 maart).
+                <strong>Let op:</strong> Buitenritten gaan alleen door bij voldoende aanmeldingen (minimaal 1, maximaal 6 personen per groep). Je kunt je alleen aanmelden voor toekomstige zaterdagen en zondagen buiten de winterstop (1 november t/m 31 maart).
               </p>
             </div>
           </motion.div>
@@ -1545,7 +1547,7 @@ export default function BuitenrittenPage() {
                               <p className="mt-1 text-xs text-gray-500">
                                 {isPriveRit
                                   ? 'Privérit: 1 tot 6 personen'
-                                  : 'Groepsrit: minimaal 2, maximaal 6 personen'}
+                                  : 'Groepsrit: minimaal 1, maximaal 6 personen'}
                               </p>
                             </div>
                           </div>
@@ -1716,7 +1718,7 @@ export default function BuitenrittenPage() {
                             <Users className="w-5 h-5 text-pink-600" />
                             <div>
                               <div className="font-semibold text-gray-900">
-                                {isPriveRit ? '1 – 6' : '2 – 6'} personen
+                                1 – 6 personen
                               </div>
                               <div className="text-sm text-gray-600">
                                 {isPriveRit ? 'per privérit' : 'per groepsrit'}
