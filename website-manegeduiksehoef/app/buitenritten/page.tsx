@@ -31,7 +31,10 @@ const BLOCKED_BUITENRIT_DATES: { year: number; month: number; day: number }[] = 
   { year: 2026, month: 7, day: 30 }, // 30 augustus 2026
   { year: 2026, month: 8, day: 5 },  // 5 september 2026
   { year: 2026, month: 8, day: 6 },  // 6 september 2026
+  { year: 2026, month: 8, day: 12 }, // 12 september 2026
+  { year: 2026, month: 8, day: 13 }, // 13 september 2026
   { year: 2026, month: 8, day: 27 }, // 27 september 2026
+  { year: 2026, month: 9, day: 3 },  // 3 oktober 2026
 ]
 
 function isBlockedBuitenritDate(day: number, month: number, year: number) {
