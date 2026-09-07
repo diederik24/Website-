@@ -8,6 +8,7 @@ import VacationNotice from '@/components/VacationNotice'
 import GoogleReviews from '@/components/GoogleReviews'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, Phone, Mail, MapPin, Clock, Instagram, Facebook, Users, Shield, Award, Heart, Star, Sparkles, Zap, Crown, Gem, Flower2, Sun, Moon, Calendar, Camera } from 'lucide-react'
+import WinterstopBanner from '@/components/WinterstopBanner'
 
 // Animated Counter Component
 function AnimatedCounter({ end, duration = 2000 }: { end: number; duration?: number }) {
@@ -78,6 +79,8 @@ export default function Home() {
         
         
       </section>
+
+      <WinterstopBanner />
 
       {/* Photo Gallery & Private Lesson Planner Section */}
       <section className="py-20 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
