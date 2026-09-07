@@ -36,7 +36,7 @@ export default function Footer() {
                   <div>
                     <p className="text-sm font-semibold">Bel ons</p>
                     <p className="text-sm">Voor telefonisch contact kunt u ons bereiken op telefoonnummer:</p>
-                    <p className="text-sm font-bold">+31 620685310</p>
+                    <p className="text-sm font-bold">+31 683013509</p>
                   </div>
                 </div>
                 

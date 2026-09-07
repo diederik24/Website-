@@ -436,7 +436,7 @@ export async function sendBuitenritSignupEmail(formData: BuitenritSignupData) {
         <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; color: #999; font-size: 12px;">
             <p>Manege Duikse Hoef<br>
             Duikse Hoef 6, 5175 PG Loon op Zand<br>
-            <a href="mailto:info@manegeduiksehoef.nl" style="color: ${pink500}; text-decoration: none;">info@manegeduiksehoef.nl</a> | +31 620685310</p>
+            <a href="mailto:info@manegeduiksehoef.nl" style="color: ${pink500}; text-decoration: none;">info@manegeduiksehoef.nl</a> | +31 683013509</p>
         </div>
     </div>
 </body>
@@ -488,7 +488,7 @@ Manege Duikse Hoef
 ---
 Manege Duikse Hoef
 Duikse Hoef 6, 5175 PG Loon op Zand
-info@manegeduiksehoef.nl | +31 620685310
+info@manegeduiksehoef.nl | +31 683013509
   `
 
   try {

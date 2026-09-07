@@ -251,7 +251,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-gray-800 mb-2">Telefoon</h3>
-                  <p className="text-gray-600 mb-1">+31 620685310</p>
+                  <p className="text-gray-600 mb-1">+31 683013509</p>
                   <p className="text-sm text-gray-500">Maandag tot zaterdag: 8:00 - 18:00</p>
                 </div>
               </motion.div>

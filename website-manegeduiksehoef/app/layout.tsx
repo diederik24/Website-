@@ -64,7 +64,7 @@ export default function RootLayout({
     "name": "Manege Duikse Hoef",
     "image": "https://manegeduiksehoef.nl/logo.png",
     "url": "https://manegeduiksehoef.nl",
-    "telephone": "+31620685310",
+    "telephone": "+31683013509",
     "email": "info@manegeduiksehoef.nl",
     "address": {
       "@type": "PostalAddress",
