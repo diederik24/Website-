@@ -1153,7 +1153,7 @@ export default function BuitenrittenPage() {
             {/* Info tekst */}
             <div className="text-center mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-xs text-gray-600">
-                <strong>Let op:</strong> Buitenritten gaan alleen door bij voldoende aanmeldingen (minimaal 1, maximaal 6 personen per groep). Je kunt je alleen aanmelden voor toekomstige zaterdagen en zondagen buiten de winterstop (19 oktober t/m 1 april).
+                <strong>Let op:</strong> Groepsritten gaan alleen door bij voldoende aanmeldingen (minimaal 3, maximaal 6 personen per groepsrit). Privéritten zijn vanaf 1 persoon te boeken. Je kunt je alleen aanmelden voor toekomstige zaterdagen en zondagen buiten de winterstop (19 oktober t/m 1 april).
               </p>
             </div>
           </motion.div>
