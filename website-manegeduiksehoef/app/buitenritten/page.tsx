@@ -674,6 +674,99 @@ export default function BuitenrittenPage() {
             </motion.div>
           </div>
 
+          {/* Fotogalerij */}
+          <motion.div
+            id="galerij"
+            className="mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="text-center mb-10">
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">Sfeerimpressie buitenritten</h2>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Samen door bossen en heide – een kijkje bij onze begeleide buitenritten
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <motion.div
+                className="md:col-span-3 relative overflow-hidden rounded-2xl shadow-xl group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <div className="aspect-[21/9] relative">
+                  <Image
+                    src="/google-photos/buitenrit-groep-heide.png"
+                    alt="Groep ruiters tijdens een buitenrit bij Manege Duikse Hoef"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="100vw"
+                    priority={false}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent">
+                  <div className="absolute bottom-5 left-5 text-white">
+                    <h3 className="text-xl md:text-2xl font-bold">Samen het bos in</h3>
+                    <p className="text-sm md:text-base text-white/90">Begeleide buitenritten door de natuur rondom Loon op Zand</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="relative overflow-hidden rounded-2xl shadow-lg group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
+                <div className="aspect-[4/3] relative">
+                  <Image
+                    src="/buitenritten-banner.jpg"
+                    alt="Buitenrit door de bossen"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="relative overflow-hidden rounded-2xl shadow-lg group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.15 }}
+              >
+                <div className="aspect-[4/3] relative">
+                  <Image
+                    src="/buitenrit-nature.jpg"
+                    alt="Buitenritten in de natuur"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="relative overflow-hidden rounded-2xl shadow-lg group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                <div className="aspect-[4/3] relative">
+                  <Image
+                    src="/google-photos/Manegeduiksehoef buitenrit.jpg"
+                    alt="Buitenrit Manege Duikse Hoef"
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+
           {/* Detailed Information */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
             {/* Begeleiding Details */}
