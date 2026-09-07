@@ -147,15 +147,16 @@ export default function BuitenrittenPage() {
 
   const isDateWithinWinterStop = (date: Date) => {
     const year = date.getFullYear()
-    const winterStart = new Date(year, 10, 1) // 1 november
-    const winterEnd = new Date(year + 1, 2, 31, 23, 59, 59, 999) // 31 maart volgend jaar
+    // Winterstop: 19 oktober t/m 30 april
+    const winterStart = new Date(year, 9, 19) // 19 oktober
+    const winterEnd = new Date(year + 1, 3, 30, 23, 59, 59, 999) // 30 april volgend jaar
 
     if (date >= winterStart) {
       return date <= winterEnd
     }
 
-    const prevWinterStart = new Date(year - 1, 10, 1)
-    const prevWinterEnd = new Date(year, 2, 31, 23, 59, 59, 999)
+    const prevWinterStart = new Date(year - 1, 9, 19)
+    const prevWinterEnd = new Date(year, 3, 30, 23, 59, 59, 999)
 
     return date >= prevWinterStart && date <= prevWinterEnd
   }
@@ -569,7 +570,7 @@ export default function BuitenrittenPage() {
       </section>
 
       {isWinterStopNow && (
-        <section className="relative bg-gradient-to-r from-blue-950 via-purple-900 to-blue-950 py-10 text-white overflow-hidden">
+        <section className="relative bg-gradient-to-r from-blue-950 via-blue-900 to-blue-950 py-10 text-white overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.08),_transparent_60%)]"></div>
           <div className="max-w-6xl mx-auto px-6 relative z-10">
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
@@ -580,14 +581,14 @@ export default function BuitenrittenPage() {
                 <div>
                   <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Winterstop Buitenritten</h2>
                   <p className="mt-2 text-sm md:text-base text-white/80 leading-relaxed max-w-2xl">
-                    Van <strong className="text-white">1 november</strong> tot en met <strong className="text-white">31 maart</strong> plannen we geen buitenritten.
-                    Zodra het voorjaar begint, rijden we weer elke zaterdag en zondag uit. Meld je vast aan voor ritten vanaf 1 april!
+                    Van <strong className="text-white">19 oktober</strong> tot en met <strong className="text-white">30 april</strong> plannen we geen buitenritten.
+                    Zodra het voorjaar begint, rijden we weer elke zaterdag en zondag uit. Meld je vast aan voor ritten vanaf 1 mei!
                   </p>
                 </div>
               </div>
               <div className="rounded-2xl border border-white/20 bg-white/10 px-4 py-3 text-sm text-white/80">
                 Laatste winterstopdag:&nbsp;
-                <span className="font-semibold text-white">31 maart</span>
+                <span className="font-semibold text-white">30 april</span>
               </div>
             </div>
           </div>
@@ -990,7 +991,7 @@ export default function BuitenrittenPage() {
               </h2>
               {calendarMonthInWinterStop ? (
                 <p className="text-sm text-gray-600 mb-4">
-                  Tijdens de winterstop (1 november t/m 31 maart) plannen we geen buitenritten. Selecteer een maand vanaf april om een rit te reserveren.
+                  Tijdens de winterstop (19 oktober t/m 30 april) plannen we geen buitenritten. Selecteer een maand vanaf mei om een rit te reserveren.
                 </p>
               ) : (
                 <p className="text-sm text-gray-600 mb-4">
@@ -1177,7 +1178,7 @@ export default function BuitenrittenPage() {
             {/* Info tekst */}
             <div className="text-center mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-xs text-gray-600">
-                <strong>Let op:</strong> Buitenritten gaan alleen door bij voldoende aanmeldingen (minimaal 1, maximaal 6 personen per groep). Je kunt je alleen aanmelden voor toekomstige zaterdagen en zondagen buiten de winterstop (1 november t/m 31 maart).
+                <strong>Let op:</strong> Buitenritten gaan alleen door bij voldoende aanmeldingen (minimaal 1, maximaal 6 personen per groep). Je kunt je alleen aanmelden voor toekomstige zaterdagen en zondagen buiten de winterstop (19 oktober t/m 30 april).
               </p>
             </div>
           </motion.div>
