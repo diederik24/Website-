@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
-import { Clock, Users, Shield, Star, Calendar, MapPin, CheckCircle, AlertTriangle, Coffee, Utensils, ChevronLeft, ChevronRight, X, Timer, Snowflake, Loader2, Heart } from 'lucide-react'
+import { Clock, Users, Shield, Star, Calendar, MapPin, CheckCircle, AlertTriangle, Utensils, ChevronLeft, ChevronRight, X, Timer, Snowflake, Loader2, Heart } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import {
   GROEP_OPTIES,
@@ -34,6 +34,9 @@ const BLOCKED_BUITENRIT_DATES: { year: number; month: number; day: number }[] = 
   { year: 2026, month: 8, day: 6 },  // 6 september 2026
   { year: 2026, month: 8, day: 12 }, // 12 september 2026
   { year: 2026, month: 8, day: 13 }, // 13 september 2026
+  { year: 2026, month: 8, day: 19 }, // 19 september 2026
+  { year: 2026, month: 8, day: 20 }, // 20 september 2026
+  { year: 2026, month: 8, day: 26 }, // 26 september 2026
   { year: 2026, month: 8, day: 27 }, // 27 september 2026
   { year: 2026, month: 9, day: 3 },  // 3 oktober 2026
 ]
@@ -669,7 +672,7 @@ export default function BuitenrittenPage() {
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Met Arrangement</h3>
               <p className="text-gray-600 text-center leading-relaxed">
-                Een buitenrit met arrangement is mogelijk bij Manege Duikse Hoef. Koffie, buitenrit en een lekkere lunch!
+                Een buitenrit met arrangement is mogelijk bij Manege Duikse Hoef. Buitenrit en een lekkere lunch!
               </p>
             </motion.div>
           </div>
@@ -799,7 +802,7 @@ export default function BuitenrittenPage() {
                 </div>
                 <div className="flex items-start gap-3">
                   <Clock className="w-6 h-6 text-blue-600 mt-1 flex-shrink-0" />
-                  <p className="text-gray-700">U dient minimaal 30 minuten voor aanvang aanwezig te zijn</p>
+                  <p className="text-gray-700">U dient om 9.30 aanwezig te zijn</p>
                 </div>
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-6 h-6 text-red-600 mt-1 flex-shrink-0" />
@@ -822,18 +825,8 @@ export default function BuitenrittenPage() {
               <div className="space-y-4">
                 <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
                   <Clock className="w-5 h-5 text-purple-600" />
-                  <span className="font-semibold">9.15 uur</span>
-                  <span className="text-gray-700">Aankomst op de manege</span>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
-                  <Coffee className="w-5 h-5 text-purple-600" />
-                  <span className="font-semibold">9.15 - 9.45</span>
-                  <span className="text-gray-700">Koffie met iets lekkers</span>
-                </div>
-                <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
-                  <Users className="w-5 h-5 text-purple-600" />
-                  <span className="font-semibold">9.45 uur</span>
-                  <span className="text-gray-700">Kennismaking met de paarden</span>
+                  <span className="font-semibold">9.30 uur</span>
+                  <span className="text-gray-700">Aankomst op de manege / kennismaken met de paarden</span>
                 </div>
                 <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
                   <Star className="w-5 h-5 text-purple-600" />
@@ -1700,7 +1693,7 @@ export default function BuitenrittenPage() {
                                   Upgrade naar Arrangement (+€15,00)
                                 </label>
                                 <p className="text-sm text-purple-700 mt-1">
-                                  Inclusief koffie, buitenrit en lekkere lunch (excl. dranken)
+                                  Inclusief buitenrit en lekkere lunch (excl. dranken)
                                 </p>
                               </div>
                             </div>
@@ -1803,8 +1796,8 @@ export default function BuitenrittenPage() {
                           <div className="flex items-center gap-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
                             <Clock className="w-5 h-5 text-yellow-600" />
                             <div>
-                              <div className="font-semibold text-yellow-800">15 minuten</div>
-                              <div className="text-sm text-yellow-700">van tevoren aanwezig</div>
+                              <div className="font-semibold text-yellow-800">9.30</div>
+                              <div className="text-sm text-yellow-700">aanwezig op de manege</div>
                             </div>
                           </div>
                         </div>
