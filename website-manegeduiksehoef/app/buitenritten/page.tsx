@@ -374,7 +374,7 @@ export default function BuitenrittenPage() {
     // Splits op @ en controleer beide delen
     const parts = email.split('@')
     if (parts.length !== 2) {
-      return 'E-mailadres moet precies Ã©Ã©n @ bevatten'
+      return 'E-mailadres moet precies +®+®n @ bevatten'
     }
     
     const [localPart, domain] = parts
@@ -638,7 +638,7 @@ export default function BuitenrittenPage() {
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4 text-center">Weekendritten</h3>
               <p className="text-gray-600 text-center leading-relaxed">
-                Bijna het hele jaar organiseren we buitenritten op zaterdag en zondag. Kies een rit die past bij jouw niveau: van beginnend tot gevorderd, of een privÃ©rit.
+                Bijna het hele jaar organiseren we buitenritten op zaterdag en zondag. Kies een rit die past bij jouw niveau: van beginnend tot gevorderd, of een priv+®rit.
               </p>
             </motion.div>
 
@@ -688,7 +688,7 @@ export default function BuitenrittenPage() {
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold text-gray-900 mb-3">Sfeerimpressie buitenritten</h2>
               <p className="text-gray-600 max-w-2xl mx-auto">
-                Samen door bossen en heide â€“ een kijkje bij onze begeleide buitenritten
+                Samen door bossen en heide ÔÇô een kijkje bij onze begeleide buitenritten
               </p>
             </div>
 
@@ -826,7 +826,7 @@ export default function BuitenrittenPage() {
                 <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
                   <Clock className="w-5 h-5 text-purple-600" />
                   <span className="font-semibold">9.30 uur</span>
-                  <span className="text-gray-700">9.30 aanwezig</span>
+                  <span className="text-gray-700">aanwezig</span>
                 </div>
                 <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
                   <Star className="w-5 h-5 text-purple-600" />
@@ -840,7 +840,7 @@ export default function BuitenrittenPage() {
                 </div>
                 <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
                   <Utensils className="w-5 h-5 text-purple-600" />
-                  <span className="font-semibold">Â±12.00 uur</span>
+                  <span className="font-semibold">-¦12.00 uur</span>
                   <span className="text-gray-700">Lunch: soep, gebakken ei, kroket met brood</span>
                 </div>
               </div>
@@ -889,7 +889,7 @@ export default function BuitenrittenPage() {
               </div>
             </div>
 
-            {/* PrivÃ©ritten */}
+            {/* Priv+®ritten */}
             <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-pink-50 via-rose-50 to-white border border-pink-100 p-6 md:p-8">
               <div className="absolute -top-16 -right-16 w-48 h-48 bg-pink-200/30 rounded-full blur-3xl pointer-events-none" />
               <div className="absolute -bottom-20 -left-10 w-40 h-40 bg-rose-200/25 rounded-full blur-3xl pointer-events-none" />
@@ -899,7 +899,7 @@ export default function BuitenrittenPage() {
                   <Heart className="w-5 h-5 text-pink-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900">PrivÃ©rit</h3>
+                  <h3 className="text-xl font-bold text-gray-900">Priv+®rit</h3>
                   <p className="text-sm text-gray-600">
                     Persoonlijke begeleiding, 1 tot 1,5 uur afhankelijk van je niveau
                   </p>
@@ -1006,7 +1006,7 @@ export default function BuitenrittenPage() {
                   <strong className="text-orange-600"> Stichting Veilige Paardensport</strong> en draagt daarom een veiligheidscertificaat.
                 </p>
                 <p className="text-gray-700 mb-6">
-                  Dit betekent dat de accommodatie voldoet aan de officiÃ«le basiseisen voor een veilige beoefening van de paardensport.
+                  Dit betekent dat de accommodatie voldoet aan de offici+½le basiseisen voor een veilige beoefening van de paardensport.
                 </p>
                 <motion.button
                   onClick={() => setShowSafetyModal(true)}
@@ -1056,7 +1056,7 @@ export default function BuitenrittenPage() {
                 </p>
               ) : (
                 <p className="text-sm text-gray-600 mb-4">
-                  Klik op Ã©Ã©n van de <span className="text-green-600 font-semibold">groene</span> dagen om je aan te melden
+                  Klik op +®+®n van de <span className="text-green-600 font-semibold">groene</span> dagen om je aan te melden
                 </p>
               )}
               
@@ -1239,7 +1239,7 @@ export default function BuitenrittenPage() {
             {/* Info tekst */}
             <div className="text-center mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-xs text-gray-600">
-                <strong>Let op:</strong> Groepsritten gaan alleen door bij voldoende aanmeldingen (minimaal 3, maximaal 6 personen per groepsrit). PrivÃ©ritten zijn vanaf 1 persoon te boeken. Je kunt je alleen aanmelden voor toekomstige zaterdagen en zondagen buiten de winterstop (19 oktober t/m 1 april).
+                <strong>Let op:</strong> Groepsritten gaan alleen door bij voldoende aanmeldingen (minimaal 3, maximaal 6 personen per groepsrit). Priv+®ritten zijn vanaf 1 persoon te boeken. Je kunt je alleen aanmelden voor toekomstige zaterdagen en zondagen buiten de winterstop (19 oktober t/m 1 april).
               </p>
             </div>
           </motion.div>
@@ -1461,7 +1461,7 @@ export default function BuitenrittenPage() {
                         <div className="flex items-center gap-3 text-pink-100 mt-1">
                           <Calendar className="w-5 h-5" />
                           <span className="font-semibold">{selectedDate.day} {months[selectedDate.month]} {selectedDate.year}</span>
-                          <span>â€¢</span>
+                          <span>ÔÇó</span>
                           <span className="font-semibold">
                             {selectedRitOptie?.duur
                               || (selectedDate.type === 'arrangement' ? '09:15 - 12:00' : 'Zaterdag & zondag')}
@@ -1551,21 +1551,21 @@ export default function BuitenrittenPage() {
                                 <optgroup label="Groepsrit">
                                   {GROEP_OPTIES.map((optie) => (
                                     <option key={optie.id} value={optie.id}>
-                                      {optie.niveau} â€“ {optie.duur} ({optie.prijsLabel})
+                                      {optie.niveau} ÔÇô {optie.duur} ({optie.prijsLabel})
                                     </option>
                                   ))}
                                 </optgroup>
-                                <optgroup label="PrivÃ©rit">
+                                <optgroup label="Priv+®rit">
                                   {PRIVE_OPTIES.map((optie) => (
                                     <option key={optie.id} value={optie.id}>
-                                      {optie.niveau} â€“ {optie.duur} ({optie.prijsLabel})
+                                      {optie.niveau} ÔÇô {optie.duur} ({optie.prijsLabel})
                                     </option>
                                   ))}
                                 </optgroup>
                               </select>
                               {selectedRitOptie && (
                                 <p className="mt-2 text-sm text-gray-600">
-                                  {selectedRitOptie.gangen} Â· {selectedRitOptie.duur}
+                                  {selectedRitOptie.gangen} -À {selectedRitOptie.duur}
                                 </p>
                               )}
                             </div>
@@ -1613,7 +1613,7 @@ export default function BuitenrittenPage() {
                               </select>
                               <p className="mt-1 text-xs text-gray-500">
                                 {isPriveRit
-                                  ? 'PrivÃ©rit: 1 tot 6 personen'
+                                  ? 'Priv+®rit: 1 tot 6 personen'
                                   : 'Groepsrit: minimaal 1, maximaal 6 personen'}
                               </p>
                             </div>
@@ -1690,7 +1690,7 @@ export default function BuitenrittenPage() {
                               />
                               <div>
                                 <label htmlFor="arrangement" className="text-sm font-semibold text-purple-900 cursor-pointer">
-                                  Upgrade naar Arrangement (+â‚¬15,00)
+                                  Upgrade naar Arrangement (+Ôé¼15,00)
                                 </label>
                                 <p className="text-sm text-purple-700 mt-1">
                                   Inclusief buitenrit en lekkere lunch (excl. dranken)
@@ -1725,7 +1725,7 @@ export default function BuitenrittenPage() {
                               onChange={handleInputChange}
                               rows={2}
                               className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-300"
-                              placeholder="Heb je speciale wensen, allergieÃ«n of andere opmerkingen?"
+                              placeholder="Heb je speciale wensen, allergie+½n of andere opmerkingen?"
                             />
                           </div>
 
@@ -1771,7 +1771,7 @@ export default function BuitenrittenPage() {
 
                           <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
                             <span className="text-xl font-bold text-green-600">
-                              {selectedRitOptie?.prijsLabel || 'â€”'}
+                              {selectedRitOptie?.prijsLabel || 'ÔÇö'}
                             </span>
                             <div>
                               <div className="font-semibold text-gray-900">per persoon</div>
@@ -1785,10 +1785,10 @@ export default function BuitenrittenPage() {
                             <Users className="w-5 h-5 text-pink-600" />
                             <div>
                               <div className="font-semibold text-gray-900">
-                                1 â€“ 6 personen
+                                1 ÔÇô 6 personen
                               </div>
                               <div className="text-sm text-gray-600">
-                                {isPriveRit ? 'per privÃ©rit' : 'per groepsrit'}
+                                {isPriveRit ? 'per priv+®rit' : 'per groepsrit'}
                               </div>
                             </div>
                           </div>
