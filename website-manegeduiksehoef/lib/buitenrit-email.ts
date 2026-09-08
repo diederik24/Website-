@@ -74,11 +74,8 @@ export async function sendBuitenritSignupEmail(formData: BuitenritSignupData) {
   const timeString = formData.selectedDate.type === 'arrangement' ? '09:15 - 12:00' : ritDuur
   const totalPrice = (parseInt(formData.persons) * priceNumber).toFixed(2).replace('.', ',')
   
-  // Bereken aankomsttijd (15 minuten voor de start)
+  // Aankomst: altijd 9:30 aanwezig
   const startTime = formData.selectedDate.type === 'arrangement' ? '09:15' : '10:00'
-  const [hours, minutes] = startTime.split(':').map(Number)
-  const arrivalTime = new Date(2000, 0, 1, hours, minutes - 15)
-  const arrivalTimeString = `${arrivalTime.getHours().toString().padStart(2, '0')}:${arrivalTime.getMinutes().toString().padStart(2, '0')}`
 
   // Maak Google Calendar link
   const startDate = new Date(formData.selectedDate.year, formData.selectedDate.month, formData.selectedDate.day)
@@ -323,7 +320,7 @@ export async function sendBuitenritSignupEmail(formData: BuitenritSignupData) {
                 Belangrijk:
             </strong>
             <p style="margin: 10px 0 0 0; color: #856404;">
-                We verwachten je <strong>15 minuten van tevoren</strong> (om <strong>${arrivalTimeString}</strong>) zodat we alles kunnen voorbereiden en je veiligheidsinstructies kunnen geven.
+                We verwachten je om <strong>9:30 aanwezig</strong> op de manege, zodat we alles kunnen voorbereiden en je veiligheidsinstructies kunnen geven.
             </p>
         </div>
 
@@ -455,7 +452,7 @@ Duur: ${ritDuur}
 Rit: ${ritLabel}
 Gangen: ${ritGangen}
 
-⏰ Belangrijk: We verwachten je 15 minuten van tevoren (om ${arrivalTimeString}) zodat we alles kunnen voorbereiden en je veiligheidsinstructies kunnen geven.
+⏰ Belangrijk: We verwachten je om 9:30 aanwezig op de manege, zodat we alles kunnen voorbereiden en je veiligheidsinstructies kunnen geven.
 
 👤 Jouw Gegevens:
 Naam: ${formData.name}
