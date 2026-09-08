@@ -826,7 +826,7 @@ export default function BuitenrittenPage() {
                 <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
                   <Clock className="w-5 h-5 text-purple-600" />
                   <span className="font-semibold">9.30 uur</span>
-                  <span className="text-gray-700">Wees op tijd aanwezig op de manege (9.30) / kennismaken met de paarden</span>
+                  <span className="text-gray-700">9.30 aanwezig</span>
                 </div>
                 <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
                   <Star className="w-5 h-5 text-purple-600" />
