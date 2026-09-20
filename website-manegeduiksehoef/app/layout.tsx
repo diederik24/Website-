@@ -39,11 +39,20 @@ export const metadata: Metadata = {
     title: 'Manege Duikse Hoef - Rijlessen en Pensionstalling',
     description: 'Professionele rijlessen en uitstekende pensionstalling in een warme, veilige omgeving.',
     siteName: 'Manege Duikse Hoef',
+    images: [
+      {
+        url: '/cae32a86-1502-4106-b1f7-84aef0ab39fd.png',
+        width: 1200,
+        height: 630,
+        alt: 'Manege Duikse Hoef',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Manege Duikse Hoef - Rijlessen en Pensionstalling',
     description: 'Professionele rijlessen en uitstekende pensionstalling in een warme, veilige omgeving.',
+    images: ['/cae32a86-1502-4106-b1f7-84aef0ab39fd.png'],
   },
 }
 
@@ -62,7 +71,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "HorseRidingSchool",
     "name": "Manege Duikse Hoef",
-    "image": "https://manegeduiksehoef.nl/logo.png",
+    "image": "https://manegeduiksehoef.nl/cae32a86-1502-4106-b1f7-84aef0ab39fd.png",
     "url": "https://manegeduiksehoef.nl",
     "telephone": "+31683013509",
     "email": "info@manegeduiksehoef.nl",
