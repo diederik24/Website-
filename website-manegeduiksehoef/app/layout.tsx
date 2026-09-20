@@ -35,15 +35,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'nl_NL',
-    url: 'https://manegeduiksehoef.nl',
+    url: 'https://manegeduiksehoef.nl/',
     title: 'Manege Duikse Hoef - Rijlessen en Pensionstalling',
     description: 'Professionele rijlessen en uitstekende pensionstalling in een warme, veilige omgeving.',
     siteName: 'Manege Duikse Hoef',
     images: [
       {
-        url: '/cae32a86-1502-4106-b1f7-84aef0ab39fd.png',
+        url: 'https://manegeduiksehoef.nl/images/opengraph.jpg',
+        secureUrl: 'https://manegeduiksehoef.nl/images/opengraph.jpg',
         width: 1200,
         height: 630,
+        type: 'image/jpeg',
         alt: 'Manege Duikse Hoef',
       },
     ],
@@ -52,7 +54,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Manege Duikse Hoef - Rijlessen en Pensionstalling',
     description: 'Professionele rijlessen en uitstekende pensionstalling in een warme, veilige omgeving.',
-    images: ['/cae32a86-1502-4106-b1f7-84aef0ab39fd.png'],
+    images: ['https://manegeduiksehoef.nl/images/opengraph.jpg'],
   },
 }
 
@@ -71,7 +73,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "HorseRidingSchool",
     "name": "Manege Duikse Hoef",
-    "image": "https://manegeduiksehoef.nl/cae32a86-1502-4106-b1f7-84aef0ab39fd.png",
+    "image": "https://manegeduiksehoef.nl/images/opengraph.jpg",
     "url": "https://manegeduiksehoef.nl",
     "telephone": "+31683013509",
     "email": "info@manegeduiksehoef.nl",
